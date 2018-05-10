@@ -1,14 +1,20 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 public class LeftSideBar extends JPanel {
     private JMenuBar leftSideBarMenu;
     private JMenu download, help;
-    private JMenuItem newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
+    private JMenuItem processing, completed, queues, newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
+    private JLabel horizontalSeparator;
 
     /**
      * creating a Vertical MenuBar
@@ -37,6 +43,9 @@ public class LeftSideBar extends JPanel {
         /**
          * create menu items
          */
+        processing = new JMenuItem("Processing");
+        completed = new JMenuItem("Completed");
+        queues = new JMenuItem("Queues");
         newDownloadButton = new JMenuItem("Add a download");
         resumeButton = new JMenuItem("Resume selected download");
         pauseButton = new JMenuItem("Pause selected download");
@@ -47,8 +56,29 @@ public class LeftSideBar extends JPanel {
         about = new JMenuItem("About");
 
         /**
+         * create separator
+         */
+        /**
+         * handling vertical separator
+         */
+        ImageIcon horizontalSeparatorIcon = new ImageIcon("horizontalSeparator.png");
+        //--> resizing image
+        Image originalImg = horizontalSeparatorIcon.getImage();
+        Image newImg = originalImg.getScaledInstance(150, 20, java.awt.Image.SCALE_SMOOTH);
+        horizontalSeparatorIcon = new ImageIcon(newImg);
+        //<--
+        horizontalSeparator = new JLabel(horizontalSeparatorIcon);
+        Border borderOfSeparator = horizontalSeparator.getBorder();
+        Border marginOfSeparator = new EmptyBorder(0, 80, 0, 0);
+        horizontalSeparator.setBorder(new CompoundBorder(borderOfSeparator, marginOfSeparator));
+
+        /**
          *Handling Accelerators
          */
+        KeyStroke proccessingAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK);
+        KeyStroke completedAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK);
+        KeyStroke queuesAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.ALT_DOWN_MASK);
+
         KeyStroke newDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK);
         KeyStroke resumeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK);
         KeyStroke pauseDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK);
@@ -56,8 +86,10 @@ public class LeftSideBar extends JPanel {
         KeyStroke removeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_DOWN_MASK);
         KeyStroke settingsAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
         KeyStroke exitAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
-//        open.setAction(new MenuAction("Open", null, "Click to Open an Existing File.", KeyStroke.getKeyStroke("control alt P")));
-//        open.setAccelerator(KeyStroke.getKeyStroke("control alt P"));
+
+        processing.setAccelerator(proccessingAccelerator);
+        completed.setAccelerator(completedAccelerator);
+        queues.setAccelerator(queuesAccelerator);
         newDownloadButton.setAccelerator(newDownloadAccelerator);
         resumeButton.setAccelerator(resumeDownloadAccelerator);
         pauseButton.setAccelerator(pauseDownloadAccelerator);
@@ -69,6 +101,10 @@ public class LeftSideBar extends JPanel {
         /**
          * adding menu items to Download object
          */
+        download.add(processing);
+        download.add(completed);
+        download.add(queues);
+        download.add(horizontalSeparator);
         download.add(newDownloadButton);
         download.add(removeButton);
         download.add(pauseButton);
@@ -94,12 +130,21 @@ public class LeftSideBar extends JPanel {
         add(leftSideBarMenu);
         setBackground(Color.YELLOW);
 
-
+        /**
+         * handling actionListeners
+         */
+        Handler handler = new Handler();
+//newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
+        newDownloadButton.addActionListener(handler);
+        resumeButton.addActionListener(handler);
+        pauseButton.addActionListener(handler);
+        cancelButton.addActionListener(handler);
+        removeButton.addActionListener(handler);
+        settingsButton.addActionListener(handler);
+        exit.addActionListener(handler);
 //        setPreferredSize(new Dimension(150, 300));
 //        SpringLayout leftSideBarLayout = new SpringLayout();
 //        this.setLayout(leftSideBarLayout);
-//
-//
 //        setBackground(Color.RED);
 //        JButton Processing = new JButton("Processing");
 //        JButton Completed = new JButton("Completed");
@@ -107,7 +152,6 @@ public class LeftSideBar extends JPanel {
 //        this.add(Processing);
 //        this.add(Completed);
 //        this.add(Queues);
-
 //        leftSideBarLayout.putConstraint(SpringLayout.NORTH, Processing, 0, SpringLayout.NORTH, this);
 //        leftSideBarLayout.putConstraint(SpringLayout.WEST, Processing, 0, SpringLayout.WEST, this);
 //        leftSideBarLayout.putConstraint(SpringLayout.EAST, Processing, 0, SpringLayout.EAST, this);
@@ -117,11 +161,37 @@ public class LeftSideBar extends JPanel {
 //        leftSideBarLayout.putConstraint(SpringLayout.NORTH, Queues, 0, SpringLayout.SOUTH, Completed);
 //        leftSideBarLayout.putConstraint(SpringLayout.WEST, Queues, 0, SpringLayout.WEST, this);
 //        leftSideBarLayout.putConstraint(SpringLayout.EAST, Queues, 0, SpringLayout.EAST, this);
-
-
         setVisible(true);
-
-
     }
 
+    private class Handler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+
+            if (event.getSource() == newDownloadButton) {
+                NewDownloadTab newDownloadTab = new NewDownloadTab(); //:))))
+            }
+            if (event.getSource() == resumeButton) {
+
+            }
+            if (event.getSource() == pauseButton) {
+
+            }
+            if (event.getSource() == cancelButton) {
+
+            }
+            if (event.getSource() == removeButton) {
+
+            }
+            if (event.getSource() == settingsButton) {
+
+            }
+            if (event.getSource() == exit) {
+                System.exit(0);
+            }
+            if (event.getSource() == about) {
+
+            }
+        }
+    }
 }
