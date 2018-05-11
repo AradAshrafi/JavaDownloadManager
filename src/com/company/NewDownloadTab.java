@@ -4,12 +4,13 @@ import jdk.jshell.spi.SPIResolutionException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class NewDownloadTab extends JFrame {
     private SpringLayout newDownloadTabLayout;
     private JLabel url;
     private JTextField link;
-    private JFileChooser locationChooser;
     private JButton submit;
 
     public NewDownloadTab() {
@@ -19,14 +20,13 @@ public class NewDownloadTab extends JFrame {
         newDownloadTabLayout = new SpringLayout();
         setLayout(newDownloadTabLayout);
         setPreferredSize(new Dimension(700, 300));
-        setSize(850, 750);
+        setSize(950, 200);
 
         /**
          * making new Components
          */
         url = new JLabel();
         link = new JTextField();
-        locationChooser = new JFileChooser();
         submit = new JButton("Start Download");
 
         /**
@@ -40,7 +40,6 @@ public class NewDownloadTab extends JFrame {
          */
         add(url);
         add(link);
-        add(locationChooser);
         add(submit);
 
         /**
@@ -56,11 +55,19 @@ public class NewDownloadTab extends JFrame {
         //JButton submit
         newDownloadTabLayout.putConstraint(SpringLayout.WEST, submit, 10, SpringLayout.EAST, link);
         newDownloadTabLayout.putConstraint(SpringLayout.NORTH, submit, 10, SpringLayout.NORTH, this);
-        //JFileChooser locationChooser
-        newDownloadTabLayout.putConstraint(SpringLayout.NORTH, locationChooser, 10, SpringLayout.SOUTH, url);
+
 
 
         setVisible(true);
+    }
+    private class Handler implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            if(event.getSource()==link){
+                String downloadLink = link.getText();
+            }
+        }
     }
 //    private String
 }

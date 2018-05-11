@@ -5,6 +5,8 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Toolbar extends JPanel {
     private FlowLayout toolbarLayout;
@@ -170,6 +172,51 @@ public class Toolbar extends JPanel {
         add(removeButton);
         add(settingsButton);
 
+        /**
+         * add handler to components
+         */
+
+//        newDownloadButton.addActionListener(leftSideBarHandler);
+//        resumeButton.addActionListener(leftSideBarHandler);
+//        pauseButton.addActionListener(leftSideBarHandler);
+//        cancelButton.addActionListener(leftSideBarHandler);
+//        removeButton.addActionListener(leftSideBarHandler);
+//        settingsButton.addActionListener(leftSideBarHandler);
+//        exit.addActionListener(leftSideBarHandler);
+
+
         setVisible(true);
     }
+
+//    private class Handler implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent event) {
+//
+//            if (event.getSource() == newDownloadButton) {
+//                NewDownloadTab newDownloadTab = new NewDownloadTab(); //:))))
+//            }
+//            if (event.getSource() == resumeButton) {
+//
+//            }
+//            if (event.getSource() == pauseButton) {
+//
+//            }
+//            if (event.getSource() == cancelButton) {
+//
+//            }
+//            if (event.getSource() == removeButton) {
+//
+//            }
+//            if (event.getSource() == settingsButton) {
+//
+//            }
+//            if (event.getSource() == exit) {
+//                System.exit(0);
+//            }
+//            if (event.getSource() == about) {
+//
+//            }
+//        }
+//    }
+
 }

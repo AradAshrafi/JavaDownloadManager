@@ -75,7 +75,7 @@ public class LeftSideBar extends JPanel {
         /**
          *Handling Accelerators
          */
-        KeyStroke proccessingAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK);
+        KeyStroke processingAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK);
         KeyStroke completedAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK);
         KeyStroke queuesAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.ALT_DOWN_MASK);
 
@@ -87,7 +87,7 @@ public class LeftSideBar extends JPanel {
         KeyStroke settingsAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
         KeyStroke exitAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
 
-        processing.setAccelerator(proccessingAccelerator);
+        processing.setAccelerator(processingAccelerator);
         completed.setAccelerator(completedAccelerator);
         queues.setAccelerator(queuesAccelerator);
         newDownloadButton.setAccelerator(newDownloadAccelerator);
@@ -133,15 +133,15 @@ public class LeftSideBar extends JPanel {
         /**
          * handling actionListeners
          */
-        Handler handler = new Handler();
+        Handler leftSideBarHandler = new Handler();
 //newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
-        newDownloadButton.addActionListener(handler);
-        resumeButton.addActionListener(handler);
-        pauseButton.addActionListener(handler);
-        cancelButton.addActionListener(handler);
-        removeButton.addActionListener(handler);
-        settingsButton.addActionListener(handler);
-        exit.addActionListener(handler);
+        newDownloadButton.addActionListener(leftSideBarHandler);
+        resumeButton.addActionListener(leftSideBarHandler);
+        pauseButton.addActionListener(leftSideBarHandler);
+        cancelButton.addActionListener(leftSideBarHandler);
+        removeButton.addActionListener(leftSideBarHandler);
+        settingsButton.addActionListener(leftSideBarHandler);
+        exit.addActionListener(leftSideBarHandler);
 //        setPreferredSize(new Dimension(150, 300));
 //        SpringLayout leftSideBarLayout = new SpringLayout();
 //        this.setLayout(leftSideBarLayout);
@@ -164,7 +164,7 @@ public class LeftSideBar extends JPanel {
         setVisible(true);
     }
 
-    private class Handler implements ActionListener {
+    public class Handler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
 
@@ -184,7 +184,7 @@ public class LeftSideBar extends JPanel {
 
             }
             if (event.getSource() == settingsButton) {
-
+                Setting setting = new Setting();
             }
             if (event.getSource() == exit) {
                 System.exit(0);

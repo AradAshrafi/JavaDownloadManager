@@ -26,6 +26,7 @@ public class UI extends JFrame {
         setLayout(UILayout);
         add(leftSideBar, BorderLayout.WEST);
         add(toolbar, BorderLayout.NORTH);
+        add(body, BorderLayout.CENTER);
 
 
         pack();
