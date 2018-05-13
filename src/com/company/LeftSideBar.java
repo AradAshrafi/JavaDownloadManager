@@ -1,20 +1,23 @@
 package com.company;
 
+import com.company.BetweenClassesRelation.DownloadItemsConnection;
+
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class LeftSideBar extends JPanel {
     private JMenuBar leftSideBarMenu;
     private JMenu download, help;
     private JMenuItem processing, completed, queues, newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
     private JLabel horizontalSeparator;
+    private DownloadItemsConnection downloadItemsConnection;
 
     /**
      * creating a Vertical MenuBar
@@ -24,10 +27,15 @@ public class LeftSideBar extends JPanel {
 
         public VerticalMenuBar() {
             setLayout(grid);
+
         }
     }
 
-    public LeftSideBar() {
+    public LeftSideBar(UI ui) {
+        /**
+         * casting ui to interface to use it's functionality
+         */
+        downloadItemsConnection = (DownloadItemsConnection) (ui);
 
         /**
          * create menu bar (Vertical Menubar)
@@ -39,6 +47,7 @@ public class LeftSideBar extends JPanel {
          */
         download = new JMenu("Download");
         help = new JMenu("Help");
+
 
         /**
          * create menu items
@@ -75,10 +84,11 @@ public class LeftSideBar extends JPanel {
         /**
          *Handling Accelerators
          */
+        //part 1
         KeyStroke processingAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK);
         KeyStroke completedAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK);
         KeyStroke queuesAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.ALT_DOWN_MASK);
-
+        //part 2
         KeyStroke newDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK);
         KeyStroke resumeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK);
         KeyStroke pauseDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK);
@@ -86,7 +96,6 @@ public class LeftSideBar extends JPanel {
         KeyStroke removeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_DOWN_MASK);
         KeyStroke settingsAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
         KeyStroke exitAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
-
         processing.setAccelerator(processingAccelerator);
         completed.setAccelerator(completedAccelerator);
         queues.setAccelerator(queuesAccelerator);
@@ -123,18 +132,22 @@ public class LeftSideBar extends JPanel {
          */
         leftSideBarMenu.add(download);
         leftSideBarMenu.add(help);
+        leftSideBarMenu.setBorderPainted(true);
+//        Border borderOfDownloadItem = download.getBorder();
+//        Border marginOfDownloadItem = new (0, 40, 0, 60);
+        download.setBorder((new SoftBevelBorder(BevelBorder.RAISED)));
+        help.setBorder((new SoftBevelBorder(BevelBorder.RAISED)));
+
 
         /**
          * add menu bar to JPanel
          */
         add(leftSideBarMenu);
-        setBackground(Color.YELLOW);
 
         /**
          * handling actionListeners
          */
-        Handler leftSideBarHandler = new Handler();
-//newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
+        Handler leftSideBarHandler = new Handler(downloadItemsConnection);
         newDownloadButton.addActionListener(leftSideBarHandler);
         resumeButton.addActionListener(leftSideBarHandler);
         pauseButton.addActionListener(leftSideBarHandler);
@@ -142,6 +155,8 @@ public class LeftSideBar extends JPanel {
         removeButton.addActionListener(leftSideBarHandler);
         settingsButton.addActionListener(leftSideBarHandler);
         exit.addActionListener(leftSideBarHandler);
+
+        setLayout(new GridLayout(0, 1));
 //        setPreferredSize(new Dimension(150, 300));
 //        SpringLayout leftSideBarLayout = new SpringLayout();
 //        this.setLayout(leftSideBarLayout);
@@ -164,7 +179,14 @@ public class LeftSideBar extends JPanel {
         setVisible(true);
     }
 
-    public class Handler implements ActionListener {
+    private class Handler implements ActionListener {
+        private HashSet<DownloadItem> selectedItem;
+
+        public Handler(DownloadItemsConnection downloadItemsConnection) {
+            this.selectedItem = new HashSet<>();
+            this.selectedItem = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
+        }
+
         @Override
         public void actionPerformed(ActionEvent event) {
 
@@ -181,7 +203,11 @@ public class LeftSideBar extends JPanel {
 
             }
             if (event.getSource() == removeButton) {
-
+                Iterator<DownloadItem> it = selectedItem.iterator();
+                while (it.hasNext()) {
+                    it.next();
+                    System.out.println(it);
+                }
             }
             if (event.getSource() == settingsButton) {
                 Setting setting = new Setting();

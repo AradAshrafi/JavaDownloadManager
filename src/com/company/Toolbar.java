@@ -1,12 +1,12 @@
 package com.company;
 
+import com.company.BetweenClassesRelation.DownloadItemsConnection;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Toolbar extends JPanel {
     private FlowLayout toolbarLayout;
@@ -19,8 +19,10 @@ public class Toolbar extends JPanel {
     private JLabel verticalSeparator1;
     private JLabel verticalSeparator2;
     private JLabel logo;
+    private DownloadItemsConnection downloadItemsConnection;
 
-    public Toolbar() {
+    public Toolbar(UI ui) {
+        downloadItemsConnection = (DownloadItemsConnection) (ui);
         Image originalImg;
         Image newImg;
         toolbarLayout = new FlowLayout(FlowLayout.LEFT);

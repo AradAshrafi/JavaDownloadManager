@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.BetweenClassesRelation.DownloadItemsConnection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -7,26 +9,30 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+
 
 public class DownloadsPanel extends JPanel {
     private ArrayList<DownloadItem> mainQueue;
-    private HashSet<DownloadItem> selectedItems;
     private GridLayout downloadsPanelLayout;
+    private DownloadItemsConnection downloadItemsConnection;
+    private HashSet<DownloadItem> selectedItems;
 
     public void addToQueue(ArrayList queue, DownloadItem item) {
         queue.add(item);
     }
 
-
-    public DownloadsPanel() {
+    public DownloadsPanel(UI ui) {
+        /**
+         * some initialization
+         * casting ui to DownloadItemsConnection for some access
+         */
         mainQueue = new ArrayList<>();
-        selectedItems = new HashSet<>();
+        downloadItemsConnection = (DownloadItemsConnection) (ui);
+        selectedItems = downloadItemsConnection.getSelectedItems();
         downloadsPanelLayout = new GridLayout(0, 1);
         setLayout(downloadsPanelLayout);
         DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, "d://");
         DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, "d://");
-
         addToQueue(mainQueue, sample1);
         addToQueue(mainQueue, sample2);
         Iterator<DownloadItem> it = mainQueue.iterator();
@@ -46,6 +52,10 @@ public class DownloadsPanel extends JPanel {
             add(item);
         }
         setVisible(true);
+    }
+
+    public void removeFromPanel(DownloadItem downloadItem) {
+        mainQueue.remove(downloadItem);
     }
 
     private class MouseHandler implements MouseListener {
@@ -85,5 +95,4 @@ public class DownloadsPanel extends JPanel {
     }
 
 
-//    private ArrayList<JProgressBar> downloads
 }
