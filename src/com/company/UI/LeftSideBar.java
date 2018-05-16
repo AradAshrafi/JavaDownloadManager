@@ -1,6 +1,8 @@
-package com.company;
+package com.company.UI;
 
 import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.BetweenClassesRelation.NewDownloadItemConnection;
+import com.company.BetweenClassesRelation.NewDownloadItemConnection;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -9,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -17,7 +20,9 @@ public class LeftSideBar extends JPanel {
     private JMenu download, help;
     private JMenuItem processing, completed, queues, newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
     private JLabel horizontalSeparator;
+    private JButton lookAndFeelManager;
     private DownloadItemsConnection downloadItemsConnection;
+    private NewDownloadItemConnection newDownloadItemConnection;
 
     /**
      * creating a Vertical MenuBar
@@ -34,8 +39,10 @@ public class LeftSideBar extends JPanel {
     public LeftSideBar(UI ui) {
         /**
          * casting ui to interface to use it's functionality
+         * cast it to NewDownloadItem to change body panel
          */
         downloadItemsConnection = (DownloadItemsConnection) (ui);
+        newDownloadItemConnection = (NewDownloadItemConnection) (ui);
 
         /**
          * create menu bar (Vertical Menubar)
@@ -43,10 +50,11 @@ public class LeftSideBar extends JPanel {
         leftSideBarMenu = new VerticalMenuBar();
 
         /**
-         * create menu titles
+         * create menu titles + Look and Feel manager button
          */
         download = new JMenu("Download");
         help = new JMenu("Help");
+        lookAndFeelManager = new JButton("Theme");
 
 
         /**
@@ -129,9 +137,11 @@ public class LeftSideBar extends JPanel {
 
         /**
          * adding menu objects to menu bar
+         * adding look and feel manager tu menu bar
          */
         leftSideBarMenu.add(download);
         leftSideBarMenu.add(help);
+        leftSideBarMenu.add(lookAndFeelManager);
         leftSideBarMenu.setBorderPainted(true);
 //        Border borderOfDownloadItem = download.getBorder();
 //        Border marginOfDownloadItem = new (0, 40, 0, 60);
@@ -147,7 +157,7 @@ public class LeftSideBar extends JPanel {
         /**
          * handling actionListeners
          */
-        Handler leftSideBarHandler = new Handler(downloadItemsConnection);
+        Handler leftSideBarHandler = new Handler(downloadItemsConnection, ui.getContentPane());
         newDownloadButton.addActionListener(leftSideBarHandler);
         resumeButton.addActionListener(leftSideBarHandler);
         pauseButton.addActionListener(leftSideBarHandler);
@@ -155,43 +165,30 @@ public class LeftSideBar extends JPanel {
         removeButton.addActionListener(leftSideBarHandler);
         settingsButton.addActionListener(leftSideBarHandler);
         exit.addActionListener(leftSideBarHandler);
+        lookAndFeelManager.addActionListener(leftSideBarHandler);
 
         setLayout(new GridLayout(0, 1));
-//        setPreferredSize(new Dimension(150, 300));
-//        SpringLayout leftSideBarLayout = new SpringLayout();
-//        this.setLayout(leftSideBarLayout);
-//        setBackground(Color.RED);
-//        JButton Processing = new JButton("Processing");
-//        JButton Completed = new JButton("Completed");
-//        JButton Queues = new JButton("Queues");
-//        this.add(Processing);
-//        this.add(Completed);
-//        this.add(Queues);
-//        leftSideBarLayout.putConstraint(SpringLayout.NORTH, Processing, 0, SpringLayout.NORTH, this);
-//        leftSideBarLayout.putConstraint(SpringLayout.WEST, Processing, 0, SpringLayout.WEST, this);
-//        leftSideBarLayout.putConstraint(SpringLayout.EAST, Processing, 0, SpringLayout.EAST, this);
-//        leftSideBarLayout.putConstraint(SpringLayout.NORTH, Completed, 0, SpringLayout.SOUTH, Processing);
-//        leftSideBarLayout.putConstraint(SpringLayout.WEST, Completed, 0, SpringLayout.WEST, this);
-//        leftSideBarLayout.putConstraint(SpringLayout.EAST, Completed, 0, SpringLayout.EAST, this);
-//        leftSideBarLayout.putConstraint(SpringLayout.NORTH, Queues, 0, SpringLayout.SOUTH, Completed);
-//        leftSideBarLayout.putConstraint(SpringLayout.WEST, Queues, 0, SpringLayout.WEST, this);
-//        leftSideBarLayout.putConstraint(SpringLayout.EAST, Queues, 0, SpringLayout.EAST, this);
         setVisible(true);
     }
 
     private class Handler implements ActionListener {
-        private HashSet<DownloadItem> selectedItem;
+        private HashSet<DownloadItem> selectedItems;
+        private Container uiContainer;
 
-        public Handler(DownloadItemsConnection downloadItemsConnection) {
-            this.selectedItem = new HashSet<>();
-            this.selectedItem = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
+
+        public Handler(DownloadItemsConnection downloadItemsConnection, Container uiContainer) {
+            this.selectedItems = new HashSet<>();
+            this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
+            this.uiContainer = uiContainer;
         }
 
         @Override
         public void actionPerformed(ActionEvent event) {
-
             if (event.getSource() == newDownloadButton) {
-                NewDownloadTab newDownloadTab = new NewDownloadTab(); //:))))
+                NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection); //:))))
+            }
+            if (event.getSource() == lookAndFeelManager) {
+                LookAndFeelManager lookAndFeelManager = new LookAndFeelManager(uiContainer);
             }
             if (event.getSource() == resumeButton) {
 
@@ -203,10 +200,12 @@ public class LeftSideBar extends JPanel {
 
             }
             if (event.getSource() == removeButton) {
-                Iterator<DownloadItem> it = selectedItem.iterator();
+                Iterator<DownloadItem> it = selectedItems.iterator();
+                DownloadItem selectedToDelete = new DownloadItem();
                 while (it.hasNext()) {
-                    it.next();
-                    System.out.println(it);
+                    selectedToDelete = it.next();
+                    it.remove();
+                    downloadItemsConnection.removeFromSelectedItems(selectedToDelete);
                 }
             }
             if (event.getSource() == settingsButton) {

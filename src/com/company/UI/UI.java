@@ -1,18 +1,19 @@
-package com.company;
+package com.company.UI;
 
 import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.BetweenClassesRelation.NewDownloadItemConnection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
 
-public class UI extends JFrame implements DownloadItemsConnection {
+public class UI extends JFrame implements DownloadItemsConnection, NewDownloadItemConnection {
     private BorderLayout UILayout;
     private Toolbar toolbar;
     private LeftSideBar leftSideBar;
     private Body body;
+    //--> for between class relation
     private HashSet<DownloadItem> selectedItems;
-
 
     public UI() {
         super("UI");
@@ -50,6 +51,7 @@ public class UI extends JFrame implements DownloadItemsConnection {
         return selectedItems;
     }
 
+
     @Override
     public void addToSelectedItems(DownloadItem selectedItem) {
         selectedItem.add(selectedItem);
@@ -57,6 +59,16 @@ public class UI extends JFrame implements DownloadItemsConnection {
 
     @Override
     public void removeFromSelectedItems(DownloadItem selectedItem) {
-        selectedItem.remove(selectedItem);
+        selectedItems.remove(selectedItem);
+        body.getDownloadsPanel().remove(selectedItem);
+        System.out.println("selected Items size : " + selectedItems.size());
+        body.revalidate();
     }
+
+    @Override
+    public void addToDownloadPanel(DownloadItem newDownloadItem) {
+        body.getDownloadsPanel().add(newDownloadItem);
+    }
+
+
 }

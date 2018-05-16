@@ -1,6 +1,7 @@
-package com.company;
+package com.company.UI;
 
 import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.BetweenClassesRelation.StaticData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,12 +30,15 @@ public class DownloadsPanel extends JPanel {
         mainQueue = new ArrayList<>();
         downloadItemsConnection = (DownloadItemsConnection) (ui);
         selectedItems = downloadItemsConnection.getSelectedItems();
-        downloadsPanelLayout = new GridLayout(0, 1);
+        downloadsPanelLayout = new GridLayout(0, 1, 0, 20);
         setLayout(downloadsPanelLayout);
-        DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, "d://");
+        DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, StaticData.getLocation());
         DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, "d://");
+        DownloadItem sample3 = new DownloadItem("test", "failed", "https://", 20, "d://");
         addToQueue(mainQueue, sample1);
         addToQueue(mainQueue, sample2);
+        addToQueue(mainQueue, sample3);
+
         Iterator<DownloadItem> it = mainQueue.iterator();
 
         /**
@@ -46,7 +50,6 @@ public class DownloadsPanel extends JPanel {
             DownloadItem item = it.next();
             item.addMouseListener(handler);
             if (selectedItems.contains(item)) {
-                System.out.println("contains beyotch");
                 setBackground(Color.red);
             }
             add(item);
