@@ -259,7 +259,7 @@ public class Toolbar extends JPanel {
                 }
             }
             if (event.getSource() == settingsButton) {
-                Setting setting = new Setting(uiContainer);
+                Setting setting = new Setting(uiContainer, downloadItemsConnection);
             }
         }
     }

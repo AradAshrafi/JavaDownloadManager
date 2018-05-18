@@ -1,5 +1,6 @@
 package com.company.UI;
 
+import com.company.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.Body.MyFileChooser;
 import com.company.UI.LeftSideBar.LookAndFeelManager;
 
@@ -14,14 +15,16 @@ public class Setting extends JFrame {
     private SpringLayout settingLayout;
     private JLabel simultaneousDownloadsLabel;
     private JSlider simultaneousDownloads;
+    private int simultaneousDownloadsValue;
     private JButton chooseFileLocationTrigger;
     private JButton themeTrigger;
     private Container uiContainer;
 //    private JFileChooser locationChooser;
 
 
-    public Setting(Container uiContainer) {
-        this.uiContainer = uiContainer;
+    public Setting(Container container, DownloadItemsConnection downloadItemsConnection) {
+        this.uiContainer = container;
+        this.simultaneousDownloadsValue = downloadItemsConnection.getSimultaneousDownloads();
         /**
          * handling Layout
          */
@@ -32,10 +35,18 @@ public class Setting extends JFrame {
 
         /**
          * making new components
+         * config simultaneousDownloads
          */
         simultaneousDownloadsLabel = new JLabel();
         simultaneousDownloadsLabel.setText("Simultaneous Downloads : ");
-        simultaneousDownloads = new JSlider(JSlider.HORIZONTAL, 0, 50, 50);
+        simultaneousDownloads = new JSlider(JSlider.HORIZONTAL, 0, 500, 500);
+        simultaneousDownloads.setForeground(Color.BLUE);
+//        simultaneousDownloads.setMinorTickSpacing(100);
+        simultaneousDownloads.setMajorTickSpacing(50);
+        simultaneousDownloads.setPaintTicks(true);
+        simultaneousDownloads.setPaintLabels(true);
+        simultaneousDownloads.setPaintTrack(true);
+
         chooseFileLocationTrigger = new JButton("Choose File Location");
         themeTrigger = new JButton("theme");
 
@@ -57,6 +68,8 @@ public class Setting extends JFrame {
         //JSlider simultaneousDownloads
         settingLayout.putConstraint(SpringLayout.NORTH, simultaneousDownloads, 10, SpringLayout.NORTH, this);
         settingLayout.putConstraint(SpringLayout.WEST, simultaneousDownloads, 40, SpringLayout.EAST, simultaneousDownloadsLabel);
+        settingLayout.putConstraint(SpringLayout.EAST, simultaneousDownloads, -20, SpringLayout.EAST, this);
+
         //JButton chooseFileLocationTrigger
         settingLayout.putConstraint(SpringLayout.NORTH, chooseFileLocationTrigger, 30, SpringLayout.SOUTH, simultaneousDownloadsLabel);
         settingLayout.putConstraint(SpringLayout.WEST, chooseFileLocationTrigger, 10, SpringLayout.WEST, this);
@@ -67,14 +80,21 @@ public class Setting extends JFrame {
         /**
          * adding Handlers to components
          */
-        SettingsHandler settingsHandler = new SettingsHandler();
+        SettingsHandler settingsHandler = new SettingsHandler(downloadItemsConnection);
+        simultaneousDownloads.addChangeListener(settingsHandler);
         chooseFileLocationTrigger.addActionListener(settingsHandler);
         themeTrigger.addActionListener(settingsHandler);
 
+        pack();
         setVisible(true);
     }
 
     private class SettingsHandler implements ActionListener, ChangeListener {
+        private DownloadItemsConnection downloadItemsConnection;
+
+        public SettingsHandler(DownloadItemsConnection downloadItemsConnection) {
+            this.downloadItemsConnection = downloadItemsConnection;
+        }
 
         @Override
         public void actionPerformed(ActionEvent event) {
@@ -89,6 +109,10 @@ public class Setting extends JFrame {
 
         @Override
         public void stateChanged(ChangeEvent event) {
+            if (event.getSource() == simultaneousDownloads) {
+                simultaneousDownloadsValue = simultaneousDownloads.getValue();
+                downloadItemsConnection.setSimultaneousDownloads(simultaneousDownloadsValue);
+            }
 
         }
     }

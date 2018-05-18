@@ -22,4 +22,9 @@ public interface DownloadItemsConnection {
     void cancelSelectedItem(DownloadItem selectedItem);
 
     HashMap<String, DownloadQueue> getDownloadQueues();
+
+    int getSimultaneousDownloads();
+
+    void setSimultaneousDownloads(int simultaneousDownloads);
+
 }

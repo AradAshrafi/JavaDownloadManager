@@ -20,6 +20,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     //--> for between class relation
     private HashSet<DownloadItem> selectedItems;
     private HashMap<String, DownloadQueue> downloadQueues;
+    private int simultaneousDownloads = 1000;
 
     public UI() {
         super("UI");
@@ -112,6 +113,16 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     @Override
     public HashMap<String, DownloadQueue> getDownloadQueues() {
         return this.downloadQueues;
+    }
+
+    @Override
+    public int getSimultaneousDownloads() {
+        return simultaneousDownloads;
+    }
+
+    @Override
+    public void setSimultaneousDownloads(int simultaneousDownloads) {
+        this.simultaneousDownloads = simultaneousDownloads;
     }
 
     @Override

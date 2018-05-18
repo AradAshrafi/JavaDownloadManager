@@ -221,7 +221,7 @@ public class LeftSideBar extends JPanel {
                 }
             }
             if (event.getSource() == settings) {
-                Setting setting = new Setting(uiContainer);
+                Setting setting = new Setting(uiContainer, downloadItemsConnection);
             }
             if (event.getSource() == exit) {
                 System.exit(0);
