@@ -43,7 +43,6 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         add(toolbar, BorderLayout.NORTH);
         add(body, BorderLayout.CENTER);
 
-
         pack();
         setVisible(true);
 

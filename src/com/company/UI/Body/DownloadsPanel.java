@@ -34,11 +34,11 @@ public class DownloadsPanel extends JPanel {
         setLayout(downloadsPanelLayout);
         setPreferredSize(new Dimension(700, 500));
 
-        DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, StaticData.getLocation());
-        DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, "d://");
-        DownloadItem sample3 = new DownloadItem("test", "failed", "https://", 20, "d://");
-        DownloadItem sample4 = new DownloadItem("test", "failed", "https://", 20, StaticData.getLocation());
-        DownloadItem sample5 = new DownloadItem("test", "failed", "https://", 20, StaticData.getLocation());
+        DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, 100, 0, StaticData.getLocation());
+        DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, 0, 0, "d://");
+        DownloadItem sample3 = new DownloadItem("test", "failed", "https://", 20, 1000, 0, "d://");
+        DownloadItem sample4 = new DownloadItem("test", "failed", "https://", 20, 120, 0, StaticData.getLocation());
+        DownloadItem sample5 = new DownloadItem("test", "failed", "https://", 20, 15, 0, StaticData.getLocation());
 
         mainQueue.operationOnDownloadQueue(sample1, "add");
         mainQueue.operationOnDownloadQueue(sample2, "add");
