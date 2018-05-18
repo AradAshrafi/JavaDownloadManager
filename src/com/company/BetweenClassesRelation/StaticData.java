@@ -3,7 +3,10 @@ package com.company.BetweenClassesRelation;
 public class StaticData {
     private static StaticData ourInstance = new StaticData();
 
-    private static String locationOfStorage = "C://Desktop";
+    /**
+     * location of saving files
+     */
+    private static String locationOfStorage = "C:\\Users\\asus\\Desktop";
 
     public static String getLocation() {
         return locationOfStorage;

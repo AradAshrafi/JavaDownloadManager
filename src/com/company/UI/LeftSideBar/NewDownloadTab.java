@@ -86,6 +86,7 @@ public class NewDownloadTab extends JFrame {
         NewDownloadTabHandler newDownloadTabHandler = new NewDownloadTabHandler(this, downloadItemsConnection, newDownloadItemConnection);
         submit.addActionListener(newDownloadTabHandler);
 
+        pack();
         setVisible(true);
     }
 

@@ -22,8 +22,7 @@ public class LeftSideBar extends JPanel {
     private JMenuItem processing, completed, queues, newDownload, pauseResume, cancel, remove, settings, exit, about;
     private JLabel horizontalSeparator;
     private JButton lookAndFeelManager;
-    private DownloadItemsConnection downloadItemsConnection;
-    private NewDownloadItemConnection newDownloadItemConnection;
+
 
     /**
      * creating a Vertical MenuBar
@@ -38,13 +37,6 @@ public class LeftSideBar extends JPanel {
     }
 
     public LeftSideBar(UI ui) {
-        /**
-         * casting ui to interface to use it's functionality
-         * cast it to NewDownloadItem to change body panel
-         */
-        downloadItemsConnection = (DownloadItemsConnection) (ui);
-        newDownloadItemConnection = (NewDownloadItemConnection) (ui);
-
         /**
          * create menu bar (Vertical Menubar)
          */
@@ -156,7 +148,7 @@ public class LeftSideBar extends JPanel {
         /**
          * handling actionListeners
          */
-        MenuItemHandler leftSideBarHandler = new MenuItemHandler(downloadItemsConnection, ui);
+        MenuItemHandler leftSideBarHandler = new MenuItemHandler(ui);
         newDownload.addActionListener(leftSideBarHandler);
         pauseResume.addActionListener(leftSideBarHandler);
         cancel.addActionListener(leftSideBarHandler);
@@ -176,12 +168,17 @@ public class LeftSideBar extends JPanel {
         private NewDownloadItemConnection newDownloadItemConnection;
 
 
-        public MenuItemHandler(DownloadItemsConnection downloadItemsConnection, UI ui) {
-            this.selectedItems = new HashSet<>();
-            this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
-            this.uiContainer = ui.getContentPane();
+        public MenuItemHandler(UI ui) {
+            /**
+             * casting ui to interface to use it's functionality
+             * cast it to NewDownloadItem to change body panel
+             */
             this.downloadItemsConnection = ui;
             this.newDownloadItemConnection = ui;
+
+            this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
+            this.uiContainer = ui.getContentPane();
+
         }
 
         @Override
@@ -198,7 +195,8 @@ public class LeftSideBar extends JPanel {
                 while (it.hasNext()) {
                     selectedToPauseOrResume = it.next();
                     String status = selectedToPauseOrResume.getStatus();
-                    if (status.equals("In Progress")) {
+                    if (!status.equals("In Progress")
+                            ) {
                         downloadItemsConnection.pauseSelectedItem(selectedToPauseOrResume);
                     } else if (status.equals("Paused")) {
                         downloadItemsConnection.resumeSelectedItem(selectedToPauseOrResume);
@@ -223,7 +221,7 @@ public class LeftSideBar extends JPanel {
                 }
             }
             if (event.getSource() == settings) {
-                Setting setting = new Setting();
+                Setting setting = new Setting(uiContainer);
             }
             if (event.getSource() == exit) {
                 System.exit(0);

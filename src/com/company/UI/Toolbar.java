@@ -1,12 +1,20 @@
 package com.company.UI;
 
 import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.BetweenClassesRelation.NewDownloadItemConnection;
+import com.company.UI.Body.DownloadItem;
+import com.company.UI.LeftSideBar.LookAndFeelManager;
+import com.company.UI.LeftSideBar.NewDownloadTab;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class Toolbar extends JPanel {
     private FlowLayout toolbarLayout;
@@ -19,10 +27,8 @@ public class Toolbar extends JPanel {
     private JLabel verticalSeparator1;
     private JLabel verticalSeparator2;
     private JLabel logo;
-    private DownloadItemsConnection downloadItemsConnection;
 
     public Toolbar(UI ui) {
-        downloadItemsConnection = (DownloadItemsConnection) (ui);
         Image originalImg;
         Image newImg;
         toolbarLayout = new FlowLayout(FlowLayout.LEFT);
@@ -177,48 +183,85 @@ public class Toolbar extends JPanel {
         /**
          * add handler to components
          */
-
-//        newDownloadButton.addActionListener(leftSideBarHandler);
-//        resumeButton.addActionListener(leftSideBarHandler);
-//        pauseButton.addActionListener(leftSideBarHandler);
-//        cancelButton.addActionListener(leftSideBarHandler);
-//        removeButton.addActionListener(leftSideBarHandler);
-//        settingsButton.addActionListener(leftSideBarHandler);
-//        exit.addActionListener(leftSideBarHandler);
+        ToolBarHandler toolBarHandler = new ToolBarHandler(ui);
+        newDownloadButton.addActionListener(toolBarHandler);
+        resumeButton.addActionListener(toolBarHandler);
+        pauseButton.addActionListener(toolBarHandler);
+        cancelButton.addActionListener(toolBarHandler);
+        removeButton.addActionListener(toolBarHandler);
+        settingsButton.addActionListener(toolBarHandler);
 
 
         setVisible(true);
     }
 
-//    private class Handler implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent event) {
-//
-//            if (event.getSource() == newDownloadButton) {
-//                NewDownloadTab newDownloadTab = new NewDownloadTab(); //:))))
-//            }
-//            if (event.getSource() == resumeButton) {
-//
-//            }
-//            if (event.getSource() == pauseButton) {
-//
-//            }
-//            if (event.getSource() == cancelButton) {
-//
-//            }
-//            if (event.getSource() == removeButton) {
-//
-//            }
-//            if (event.getSource() == settingsButton) {
-//
-//            }
-//            if (event.getSource() == exit) {
-//                System.exit(0);
-//            }
-//            if (event.getSource() == about) {
-//
-//            }
-//        }
-//    }
+    private class ToolBarHandler implements ActionListener {
+        private HashSet<DownloadItem> selectedItems;
+        private DownloadItemsConnection downloadItemsConnection;
+        private NewDownloadItemConnection newDownloadItemConnection;
+        private Container uiContainer;
 
+
+        public ToolBarHandler(UI ui) {
+            /**
+             * casting ui to interface to use it's functionality
+             * cast it to NewDownloadItem to change body panel
+             */
+            this.downloadItemsConnection = ui;
+            this.newDownloadItemConnection = ui;
+            this.uiContainer = ui.getContentPane();
+            this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+
+            if (event.getSource() == newDownloadButton) {
+                NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection, downloadItemsConnection); //:))))
+            }
+            if (event.getSource() == resumeButton) {
+                Iterator<DownloadItem> it = selectedItems.iterator();
+                DownloadItem selectedToPauseOrResume;
+                while (it.hasNext()) {
+                    selectedToPauseOrResume = it.next();
+                    String status = selectedToPauseOrResume.getStatus();
+                    if (!status.equals("In Progress")) {
+                        downloadItemsConnection.resumeSelectedItem(selectedToPauseOrResume);
+                    }
+                }
+            }
+            if (event.getSource() == pauseButton) {
+                Iterator<DownloadItem> it = selectedItems.iterator();
+                DownloadItem selectedToPauseOrResume;
+                while (it.hasNext()) {
+                    selectedToPauseOrResume = it.next();
+                    String status = selectedToPauseOrResume.getStatus();
+                    if (status.equals("In Progress")) {
+                        downloadItemsConnection.pauseSelectedItem(selectedToPauseOrResume);
+                    }
+                }
+            }
+            if (event.getSource() == cancelButton) {
+                Iterator<DownloadItem> it = selectedItems.iterator();
+                DownloadItem selectedToCancel;
+                while (it.hasNext()) {
+                    selectedToCancel = it.next();
+                    downloadItemsConnection.cancelSelectedItem(selectedToCancel);
+                }
+            }
+            if (event.getSource() == removeButton) {
+                Iterator<DownloadItem> it = selectedItems.iterator();
+                DownloadItem selectedToDelete;
+                while (it.hasNext()) {
+                    selectedToDelete = it.next();
+                    it.remove();
+                    downloadItemsConnection.removeSelectedItem(selectedToDelete);
+                }
+            }
+            if (event.getSource() == settingsButton) {
+                Setting setting = new Setting(uiContainer);
+            }
+        }
+    }
 }
+
