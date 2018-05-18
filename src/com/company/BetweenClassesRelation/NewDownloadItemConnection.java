@@ -1,6 +1,6 @@
 package com.company.BetweenClassesRelation;
 
-import com.company.UI.DownloadItem;
+import com.company.UI.Body.DownloadItem;
 
 public interface NewDownloadItemConnection {
 

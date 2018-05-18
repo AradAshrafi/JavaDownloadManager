@@ -1,8 +1,10 @@
-package com.company.UI;
+package com.company.UI.LeftSideBar;
 
 import com.company.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.BetweenClassesRelation.NewDownloadItemConnection;
-import com.company.BetweenClassesRelation.NewDownloadItemConnection;
+import com.company.UI.Body.DownloadItem;
+import com.company.UI.Setting;
+import com.company.UI.UI;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -11,14 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
 public class LeftSideBar extends JPanel {
     private JMenuBar leftSideBarMenu;
     private JMenu download, help;
-    private JMenuItem processing, completed, queues, newDownloadButton, resumeButton, pauseButton, cancelButton, removeButton, settingsButton, exit, about;
+    private JMenuItem processing, completed, queues, newDownload, pauseResume, cancel, remove, settings, exit, about;
     private JLabel horizontalSeparator;
     private JButton lookAndFeelManager;
     private DownloadItemsConnection downloadItemsConnection;
@@ -63,12 +64,12 @@ public class LeftSideBar extends JPanel {
         processing = new JMenuItem("Processing");
         completed = new JMenuItem("Completed");
         queues = new JMenuItem("Queues");
-        newDownloadButton = new JMenuItem("Add a download");
-        resumeButton = new JMenuItem("Resume selected download");
-        pauseButton = new JMenuItem("Pause selected download");
-        cancelButton = new JMenuItem("Cancel selected download");
-        removeButton = new JMenuItem("Remove selected download");
-        settingsButton = new JMenuItem("Settings");
+        newDownload = new JMenuItem("Add a download");
+
+        pauseResume = new JMenuItem("Pause/Resume selected download");
+        cancel = new JMenuItem("Cancel selected download");
+        remove = new JMenuItem("Remove selected download");
+        settings = new JMenuItem("Settings");
         exit = new JMenuItem("Exit");
         about = new JMenuItem("About");
 
@@ -98,8 +99,7 @@ public class LeftSideBar extends JPanel {
         KeyStroke queuesAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.ALT_DOWN_MASK);
         //part 2
         KeyStroke newDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK);
-        KeyStroke resumeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK);
-        KeyStroke pauseDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK);
+        KeyStroke pauseResumeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK);
         KeyStroke cancelDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK);
         KeyStroke removeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_DOWN_MASK);
         KeyStroke settingsAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
@@ -107,12 +107,11 @@ public class LeftSideBar extends JPanel {
         processing.setAccelerator(processingAccelerator);
         completed.setAccelerator(completedAccelerator);
         queues.setAccelerator(queuesAccelerator);
-        newDownloadButton.setAccelerator(newDownloadAccelerator);
-        resumeButton.setAccelerator(resumeDownloadAccelerator);
-        pauseButton.setAccelerator(pauseDownloadAccelerator);
-        cancelButton.setAccelerator(cancelDownloadAccelerator);
-        removeButton.setAccelerator(removeDownloadAccelerator);
-        settingsButton.setAccelerator(settingsAccelerator);
+        newDownload.setAccelerator(newDownloadAccelerator);
+        pauseResume.setAccelerator(pauseResumeDownloadAccelerator);
+        cancel.setAccelerator(cancelDownloadAccelerator);
+        remove.setAccelerator(removeDownloadAccelerator);
+        settings.setAccelerator(settingsAccelerator);
         exit.setAccelerator(exitAccelerator);
 
         /**
@@ -122,12 +121,12 @@ public class LeftSideBar extends JPanel {
         download.add(completed);
         download.add(queues);
         download.add(horizontalSeparator);
-        download.add(newDownloadButton);
-        download.add(removeButton);
-        download.add(pauseButton);
-        download.add(cancelButton);
-        download.add(removeButton);
-        download.add(settingsButton);
+        download.add(newDownload);
+        download.add(remove);
+        download.add(pauseResume);
+        download.add(cancel);
+        download.add(remove);
+        download.add(settings);
         download.add(exit);
 
         /**
@@ -157,13 +156,12 @@ public class LeftSideBar extends JPanel {
         /**
          * handling actionListeners
          */
-        Handler leftSideBarHandler = new Handler(downloadItemsConnection, ui.getContentPane());
-        newDownloadButton.addActionListener(leftSideBarHandler);
-        resumeButton.addActionListener(leftSideBarHandler);
-        pauseButton.addActionListener(leftSideBarHandler);
-        cancelButton.addActionListener(leftSideBarHandler);
-        removeButton.addActionListener(leftSideBarHandler);
-        settingsButton.addActionListener(leftSideBarHandler);
+        MenuItemHandler leftSideBarHandler = new MenuItemHandler(downloadItemsConnection, ui);
+        newDownload.addActionListener(leftSideBarHandler);
+        pauseResume.addActionListener(leftSideBarHandler);
+        cancel.addActionListener(leftSideBarHandler);
+        remove.addActionListener(leftSideBarHandler);
+        settings.addActionListener(leftSideBarHandler);
         exit.addActionListener(leftSideBarHandler);
         lookAndFeelManager.addActionListener(leftSideBarHandler);
 
@@ -171,44 +169,60 @@ public class LeftSideBar extends JPanel {
         setVisible(true);
     }
 
-    private class Handler implements ActionListener {
+    private class MenuItemHandler implements ActionListener {
         private HashSet<DownloadItem> selectedItems;
         private Container uiContainer;
+        private DownloadItemsConnection downloadItemsConnection;
+        private NewDownloadItemConnection newDownloadItemConnection;
 
 
-        public Handler(DownloadItemsConnection downloadItemsConnection, Container uiContainer) {
+        public MenuItemHandler(DownloadItemsConnection downloadItemsConnection, UI ui) {
             this.selectedItems = new HashSet<>();
             this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
-            this.uiContainer = uiContainer;
+            this.uiContainer = ui.getContentPane();
+            this.downloadItemsConnection = ui;
+            this.newDownloadItemConnection = ui;
         }
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            if (event.getSource() == newDownloadButton) {
-                NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection); //:))))
+            if (event.getSource() == newDownload) {
+                NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection, downloadItemsConnection); //:))))
             }
             if (event.getSource() == lookAndFeelManager) {
                 LookAndFeelManager lookAndFeelManager = new LookAndFeelManager(uiContainer);
             }
-            if (event.getSource() == resumeButton) {
-
-            }
-            if (event.getSource() == pauseButton) {
-
-            }
-            if (event.getSource() == cancelButton) {
-
-            }
-            if (event.getSource() == removeButton) {
+            if (event.getSource() == pauseResume) {
                 Iterator<DownloadItem> it = selectedItems.iterator();
-                DownloadItem selectedToDelete = new DownloadItem();
+                DownloadItem selectedToPauseOrResume;
+                while (it.hasNext()) {
+                    selectedToPauseOrResume = it.next();
+                    String status = selectedToPauseOrResume.getStatus();
+                    if (status.equals("In Progress")) {
+                        downloadItemsConnection.pauseSelectedItem(selectedToPauseOrResume);
+                    } else if (status.equals("Paused")) {
+                        downloadItemsConnection.resumeSelectedItem(selectedToPauseOrResume);
+                    }
+                }
+            }
+            if (event.getSource() == cancel) {
+                Iterator<DownloadItem> it = selectedItems.iterator();
+                DownloadItem selectedToCancel;
+                while (it.hasNext()) {
+                    selectedToCancel = it.next();
+                    downloadItemsConnection.cancelSelectedItem(selectedToCancel);
+                }
+            }
+            if (event.getSource() == remove) {
+                Iterator<DownloadItem> it = selectedItems.iterator();
+                DownloadItem selectedToDelete;
                 while (it.hasNext()) {
                     selectedToDelete = it.next();
                     it.remove();
-                    downloadItemsConnection.removeFromSelectedItems(selectedToDelete);
+                    downloadItemsConnection.removeSelectedItem(selectedToDelete);
                 }
             }
-            if (event.getSource() == settingsButton) {
+            if (event.getSource() == settings) {
                 Setting setting = new Setting();
             }
             if (event.getSource() == exit) {

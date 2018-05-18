@@ -1,4 +1,4 @@
-package com.company.UI;
+package com.company.UI.Body;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -7,6 +7,7 @@ import java.awt.*;
 public class DownloadItem extends JPanel {
     private String title;
     private String status;
+    //    public final static String[] statusList = {"Pause", "In Progress", "Canceled", "Failed"};
     private String url;
     private int percentage;
     private String locationOfStorage;
@@ -15,7 +16,6 @@ public class DownloadItem extends JPanel {
     private JProgressBar downloadItemProgressbar;
 
     public DownloadItem() {
-
     }
 
     public DownloadItem(String title, String status, String url, int percentage, String locationOfStorage) {
@@ -27,6 +27,11 @@ public class DownloadItem extends JPanel {
         this.url = url;
         this.percentage = percentage;
         this.locationOfStorage = locationOfStorage;
+
+        /**
+         * set download item's preferredSize
+         */
+        setPreferredSize(new Dimension(700, 100));
 
         /**
          * make GUI components
@@ -41,6 +46,8 @@ public class DownloadItem extends JPanel {
         downloadItemTitleLabel.setText(title);
         downloadItemProgressbar.setStringPainted(true);
         downloadItemProgressbar.setValue(percentage);
+        downloadItemProgressbar.setString("status : " + status + "                                                     " + percentage + "%");//:D
+
 
         /**
          * place components in Layout
@@ -50,4 +57,34 @@ public class DownloadItem extends JPanel {
         add(downloadItemProgressbar, BorderLayout.CENTER);
         setVisible(true);
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        downloadItemProgressbar.setString("status : " + status + "                                                     " + percentage + "%");
+    }
+
+    /**
+     * for DownloadItemsConnection interface,and it's used for between objects actions
+     */
+    public void pauseSelectedItem() {
+        setStatus("Paused");
+//        downloadItemProgressbar.revalidate();
+//        downloadItemProgressbar.repaint();
+    }
+
+    public void resumeSelectedItem() {
+        setStatus("In Progress");
+//        downloadItemProgressbar.revalidate();
+//        downloadItemProgressbar.repaint();
+    }
+
+    public void cancelSelectedItem() {
+        setStatus("Canceled");
+//        revalidate();
+    }
+
 }

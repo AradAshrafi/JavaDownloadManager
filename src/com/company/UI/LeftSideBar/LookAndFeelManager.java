@@ -1,4 +1,4 @@
-package com.company.UI;
+package com.company.UI.LeftSideBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ public class LookAndFeelManager extends JFrame {
          * some initialization
          */
         super("Pick Your Theme");
-        gridLayout = new GridLayout(2, 0);
+        gridLayout = new GridLayout(2, 0, 10, 10);
         containerToChange = uiContainer;
         lookAndFeelHistory = new ArrayList<>();
         lookAndFeelHistory.add("javax.swing.plaf.metal.MetalLookAndFeel");

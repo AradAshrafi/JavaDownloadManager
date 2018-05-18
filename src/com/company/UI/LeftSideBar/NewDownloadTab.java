@@ -1,12 +1,19 @@
-package com.company.UI;
+package com.company.UI.LeftSideBar;
 
+import com.company.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.BetweenClassesRelation.StaticData;
+import com.company.UI.Body.DownloadItem;
+import com.company.UI.Body.DownloadItemMouseHandler;
+import com.company.UI.Body.DownloadsPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashSet;
 
 public class NewDownloadTab extends JFrame {
     private SpringLayout newDownloadTabLayout;
@@ -15,12 +22,9 @@ public class NewDownloadTab extends JFrame {
     private JTextField link;
     private JTextField name;
     private JButton submit;
-    /**
-     * using NewDownloadItemConnection interface for connection between objects certain parts
-     */
-    private NewDownloadItemConnection newDownloadItemConnection;
 
-    public NewDownloadTab(NewDownloadItemConnection newDownloadItemConnection) {
+
+    public NewDownloadTab(NewDownloadItemConnection newDownloadItemConnection, DownloadItemsConnection downloadItemsConnection) {
         super("add a new download");
         /**
          * handling Layout
@@ -29,11 +33,6 @@ public class NewDownloadTab extends JFrame {
         setLayout(newDownloadTabLayout);
         setPreferredSize(new Dimension(700, 300));
         setSize(950, 200);
-
-        /**
-         * making connection to body panel to add new download progressbar:D
-         */
-        this.newDownloadItemConnection = newDownloadItemConnection;
 
         /**
          * making new Components
@@ -84,7 +83,7 @@ public class NewDownloadTab extends JFrame {
         /**
          * handling ActionListeners
          */
-        NewDownloadTabHandler newDownloadTabHandler = new NewDownloadTabHandler(this);
+        NewDownloadTabHandler newDownloadTabHandler = new NewDownloadTabHandler(this, downloadItemsConnection, newDownloadItemConnection);
         submit.addActionListener(newDownloadTabHandler);
 
         setVisible(true);
@@ -95,8 +94,35 @@ public class NewDownloadTab extends JFrame {
         private String downloadName;
         private NewDownloadTab newDownloadTab;
 
-        public NewDownloadTabHandler(NewDownloadTab newDownloadTab) {
+        /**
+         * making connection to item selection functions
+         */
+        private DownloadItemsConnection downloadItemsConnection;
+        /**
+         * using NewDownloadItemConnection interface to add new Download progressbar in downloadPa
+         */
+        private NewDownloadItemConnection newDownloadItemConnection;
+        private HashSet<DownloadItem> selectedItems;
+
+
+        public NewDownloadTabHandler(NewDownloadTab newDownloadTab, DownloadItemsConnection downloadItemsConnection, NewDownloadItemConnection newDownloadItemConnection) {
             this.newDownloadTab = newDownloadTab;
+            /**
+             * making connection to item selection functions
+             */
+            this.downloadItemsConnection = downloadItemsConnection;
+
+            /**
+             * making connection to body panel to add new download progressbar:D
+             */
+            this.newDownloadItemConnection = newDownloadItemConnection;
+
+            /**
+             * using downloadItemsConnection interface to fill this set
+             */
+            this.selectedItems = downloadItemsConnection.getSelectedItems();
+
+
         }
 
         @Override
@@ -105,10 +131,13 @@ public class NewDownloadTab extends JFrame {
                 String downloadLink = link.getText();
                 String downloadName = name.getText();
                 DownloadItem newDownloadItem = new DownloadItem(downloadName, "In Progress", downloadLink, 0, StaticData.getLocation());
+                System.out.println(newDownloadItem);
                 newDownloadItemConnection.addToDownloadPanel(newDownloadItem);
+                DownloadItemMouseHandler downloadItemMouseHandler = new DownloadItemMouseHandler(downloadItemsConnection);
+                newDownloadItem.addMouseListener(downloadItemMouseHandler);
                 newDownloadTab.dispose();
             }
         }
+
     }
-//    private String
 }
