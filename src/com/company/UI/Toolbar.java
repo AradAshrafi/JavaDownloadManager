@@ -33,7 +33,7 @@ public class Toolbar extends JPanel {
         Image newImg;
         toolbarLayout = new FlowLayout(FlowLayout.LEFT);
         this.setLayout(toolbarLayout);
-        setBackground(Color.CYAN);
+        setBackground(Color.decode("#B9E5F3"));
 
         /**
          * handling newDownloadButton and it's image
@@ -116,7 +116,7 @@ public class Toolbar extends JPanel {
         settingsButton = new JButton(settingsIcon);
         settingsButton.setBorder(null);
         Border borderOfSettingsButton = settingsButton.getBorder();
-        Border marginOfSettingsButton = new EmptyBorder(0, 100, 0, 0);
+        Border marginOfSettingsButton = new EmptyBorder(0, 400, 0, 0);
         settingsButton.setBorder(new CompoundBorder(borderOfSettingsButton, marginOfSettingsButton));
         settingsButton.setContentAreaFilled(false);
 
@@ -153,7 +153,7 @@ public class Toolbar extends JPanel {
         logo = new JLabel();
         logo.setIcon(logoIcon);
         Border borderOfLogo = logo.getBorder();
-        Border marginOfLogo = new EmptyBorder(0, 40, 0, 60);
+        Border marginOfLogo = new EmptyBorder(0, 0, 0, 45);
         logo.setBorder(new CompoundBorder(borderOfLogo, marginOfLogo));
 
 

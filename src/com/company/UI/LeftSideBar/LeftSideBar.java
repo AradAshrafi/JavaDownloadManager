@@ -42,13 +42,18 @@ public class LeftSideBar extends JPanel {
          * create menu bar (Vertical Menubar)
          */
         leftSideBarMenu = new VerticalMenuBar();
+        leftSideBarMenu.setBackground(Color.decode("#1C2C58"));
 
         /**
          * create menu titles + Look and Feel manager button
          */
         download = new JMenu("Download");
+        download.setForeground(Color.white);
         help = new JMenu("Help");
+        help.setForeground(Color.white);
         lookAndFeelManager = new JButton("Theme");
+        lookAndFeelManager.setBackground(Color.decode("#1C2C58"));
+        lookAndFeelManager.setForeground(Color.white);
 
 
         /**
@@ -97,6 +102,8 @@ public class LeftSideBar extends JPanel {
         KeyStroke removeDownloadAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_DOWN_MASK);
         KeyStroke settingsAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
         KeyStroke exitAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
+        //Help
+        KeyStroke aboutAccelerator = KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_DOWN_MASK);
         processing.setAccelerator(processingAccelerator);
         completed.setAccelerator(completedAccelerator);
         queues.setAccelerator(queuesAccelerator);
@@ -106,6 +113,7 @@ public class LeftSideBar extends JPanel {
         remove.setAccelerator(removeDownloadAccelerator);
         settings.setAccelerator(settingsAccelerator);
         exit.setAccelerator(exitAccelerator);
+        about.setAccelerator(aboutAccelerator);
 
         /**
          * adding menu items to Download object
@@ -135,10 +143,13 @@ public class LeftSideBar extends JPanel {
         leftSideBarMenu.add(help);
         leftSideBarMenu.add(lookAndFeelManager);
         leftSideBarMenu.setBorderPainted(true);
+
 //        Border borderOfDownloadItem = download.getBorder();
 //        Border marginOfDownloadItem = new (0, 40, 0, 60);
         download.setBorder((new SoftBevelBorder(BevelBorder.RAISED)));
         help.setBorder((new SoftBevelBorder(BevelBorder.RAISED)));
+        lookAndFeelManager.setBorder((new SoftBevelBorder(BevelBorder.RAISED)));
+
 
 
         /**

@@ -13,7 +13,6 @@ public class AddRemoveFromQueue extends JFrame {
     private JLabel queueNameLabel;
     private JTextField queueName;
     private JButton queueSubmit;
-    private String operation;
 
     public AddRemoveFromQueue(DownloadItemsConnection downloadItemsConnection, DownloadItem downloadItem, String operation) {
         super(operation + "operation on queue");

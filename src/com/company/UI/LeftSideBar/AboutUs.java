@@ -8,6 +8,7 @@ public class AboutUs extends JFrame {
         super("About Us ");
         setLayout(new GridLayout(0, 2, 5, 5));
 
+
         /**
          * some general details about program
          */

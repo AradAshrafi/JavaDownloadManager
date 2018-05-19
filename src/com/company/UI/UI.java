@@ -5,7 +5,6 @@ import com.company.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.Body;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadQueue;
-import com.company.UI.Body.DownloadsPanel;
 import com.company.UI.LeftSideBar.LeftSideBar;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+
 
 public class UI extends JFrame implements DownloadItemsConnection, NewDownloadItemConnection {
     private BorderLayout UILayout;
@@ -82,9 +81,6 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         body.getDownloadsPanel().repaint();
 
 
-//        body.getDownloadsPanelScrollbar().revalidate();
-//        body.getDownloadsPanel().downloadItemsDetail();
-//        body.getDownloadsPanelScrollbar().setPreferredSize(body.getDownloadsPanelScrollbar().getMinimumSize());
     }
 
     @Override

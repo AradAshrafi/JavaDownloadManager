@@ -43,11 +43,11 @@ public class DownloadItemMouseHandler implements MouseListener {
             if (selectedItems.contains(clickedItem)) {
                 selectedItems.remove(clickedItem);
                 System.out.println("removed");
-                clickedItem.setBackground(null);
+                clickedItem.setBackground(Color.white);
             } else {
                 selectedItems.add(clickedItem);
                 System.out.println("Added");
-                clickedItem.setBackground(Color.red);
+                clickedItem.setBackground(Color.decode("#F1F3F2"));
             }
         }
     }

@@ -33,7 +33,9 @@ public class DownloadsPanel extends JPanel {
         mainQueue.setQueue(downloadItemsConnection.getDownloadItems());
         downloadsPanelLayout = new FlowLayout(FlowLayout.LEFT);
         setLayout(downloadsPanelLayout);
-        setPreferredSize(new Dimension(700, 500));
+        setPreferredSize(new Dimension(1100, 500));
+        setForeground(Color.decode("#81A3A7"));
+        setBackground(Color.decode("#8ED3F4"));
 
         DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, 100, 0, StaticData.getLocation(), downloadItemsConnection);
         DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, 0, 0, "d://", downloadItemsConnection);

@@ -44,10 +44,11 @@ public class DownloadItem extends JPanel {
     }
 
     public DownloadItem(String title, String status, String url, int percentage, int size, int downloadSpeed, String locationOfStorage, DownloadItemsConnection downloadItemsConnection) {
-        UIManager.put("ProgressBar.background", Color.white);
-        UIManager.put("ProgressBar.foreground", Color.GREEN);
-        UIManager.put("ProgressBar.selectionBackground", Color.blue);
+        UIManager.put("ProgressBar.background", Color.WHITE);
+        UIManager.put("ProgressBar.foreground", Color.decode("#78D6AC"));
+        UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
         UIManager.put("ProgressBar.selectionForeground", Color.orange);//:-?
+        setBackground(Color.white);
         /**
          * read saved data from storage
          */
@@ -71,6 +72,7 @@ public class DownloadItem extends JPanel {
         sizeArea = new JTextArea();
         downloadedSizeArea = new JTextArea();
         downloadSpeedArea = new JTextArea();
+
 
         /**
          * config openFolder Button
@@ -132,11 +134,11 @@ public class DownloadItem extends JPanel {
         downloadItemProgressbar.setValue(percentage);
         downloadItemProgressbar.setString("status : " + status + "                                                      " + percentage + "%");//:D
         sizeArea.setText(size + "Kb");
-        sizeArea.setForeground(Color.blue);
+        sizeArea.setForeground(Color.black);
         downloadedSizeArea.setText((size * percentage / 100) + "Kb");
-        downloadedSizeArea.setForeground(Color.blue);
+        downloadedSizeArea.setForeground(Color.black);
         downloadSpeedArea.setText("1 Kb/s");
-        downloadSpeedArea.setForeground(Color.blue);
+        downloadSpeedArea.setForeground(Color.black);
         ;
 
         /**
@@ -147,7 +149,7 @@ public class DownloadItem extends JPanel {
         /**
          * set download item's preferredSize
          */
-        setPreferredSize(new Dimension(700, 100));
+        setPreferredSize(new Dimension(1050, 150));
         add(sizeArea);
         add(openFolderButton);
         add(addToQueue);
@@ -168,6 +170,8 @@ public class DownloadItem extends JPanel {
         downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadItemProgressbar, 10, SpringLayout.NORTH, this);
         downloadItemLayout.putConstraint(SpringLayout.WEST, downloadItemProgressbar, 10, SpringLayout.EAST, downloadItemTitleLabel);
         downloadItemLayout.putConstraint(SpringLayout.EAST, downloadItemProgressbar, -10, SpringLayout.EAST, this);
+        downloadItemLayout.putConstraint(SpringLayout.SOUTH, downloadItemProgressbar, 30, SpringLayout.NORTH, downloadItemProgressbar);
+
         //JTextArea downloadedSizeArea
         downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadedSizeArea, 10, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.WEST, downloadedSizeArea, 50, SpringLayout.WEST, this);
@@ -198,6 +202,9 @@ public class DownloadItem extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * implementing ActionListener for buttons
+     */
     public class DownloadItemButtonListener implements ActionListener {
         private DownloadItem downloadItem;
         private DownloadItemsConnection downloadItemsConnection;

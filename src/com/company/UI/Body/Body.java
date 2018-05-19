@@ -13,6 +13,7 @@ public class Body extends JPanel {
 
     public Body(UI ui) {
         setLayout(new GridLayout(0, 1));
+
         contentPane = new JPanel(new GridLayout(0, 1));
         /**
          * passing ui to DownloadPanel constructor to cast it in future
