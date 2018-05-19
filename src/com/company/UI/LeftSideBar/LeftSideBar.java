@@ -150,6 +150,9 @@ public class LeftSideBar extends JPanel {
          * handling actionListeners
          */
         MenuItemHandler leftSideBarHandler = new MenuItemHandler(ui);
+        processing.addActionListener(leftSideBarHandler);
+        completed.addActionListener(leftSideBarHandler);
+        queues.addActionListener(leftSideBarHandler);
         newDownload.addActionListener(leftSideBarHandler);
         pauseResume.addActionListener(leftSideBarHandler);
         cancel.addActionListener(leftSideBarHandler);
@@ -157,6 +160,7 @@ public class LeftSideBar extends JPanel {
         settings.addActionListener(leftSideBarHandler);
         exit.addActionListener(leftSideBarHandler);
         lookAndFeelManager.addActionListener(leftSideBarHandler);
+        about.addActionListener(leftSideBarHandler);
 
         setLayout(new GridLayout(0, 1));
         setVisible(true);
@@ -184,14 +188,17 @@ public class LeftSideBar extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            if(event.getSource()==processing){
+            if (event.getSource() == processing) {
+                System.out.println("processing");
+                ProcessingOrCompleteFrame processingOrCompleteFrame = new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "processing");
+            }
+            if (event.getSource() == completed) {
+                System.out.println("completed");
+                ProcessingOrCompleteFrame processingOrCompleteFrame = new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "completed");
 
             }
-            if(event.getSource()==completed){
-
-            }
-            if(event.getSource()==queues){
-
+            if (event.getSource() == queues) {
+                Queues queues = new Queues(downloadItemsConnection);
             }
             if (event.getSource() == newDownload) {
                 NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection, downloadItemsConnection); //:))))
@@ -237,7 +244,7 @@ public class LeftSideBar extends JPanel {
                 System.exit(0);
             }
             if (event.getSource() == about) {
-
+                AboutUs aboutUs = new AboutUs();
             }
         }
     }

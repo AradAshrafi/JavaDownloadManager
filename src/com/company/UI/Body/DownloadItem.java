@@ -1,5 +1,7 @@
 package com.company.UI.Body;
 
+import com.company.BetweenClassesRelation.DownloadItemsConnection;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -33,6 +35,7 @@ public class DownloadItem extends JPanel {
      */
     private JButton openFolderButton;
     private JButton addToQueue;
+    private JButton removeFromQueue;
     private JLabel downloadItemTitleLabel;
     private JProgressBar downloadItemProgressbar;
     private JTextArea sizeArea, downloadedSizeArea, downloadSpeedArea;
@@ -40,7 +43,7 @@ public class DownloadItem extends JPanel {
     public DownloadItem() {
     }
 
-    public DownloadItem(String title, String status, String url, int percentage, int size, int downloadSpeed, String locationOfStorage) {
+    public DownloadItem(String title, String status, String url, int percentage, int size, int downloadSpeed, String locationOfStorage, DownloadItemsConnection downloadItemsConnection) {
         UIManager.put("ProgressBar.background", Color.white);
         UIManager.put("ProgressBar.foreground", Color.GREEN);
         UIManager.put("ProgressBar.selectionBackground", Color.blue);
@@ -75,6 +78,7 @@ public class DownloadItem extends JPanel {
         /**
          * handling settingsButton and it's image
          * handling addToQueueButton and it's image
+         * handling removeFromQueueButton and it's image
          */
         //openFolderButton
         Image originalImg;
@@ -82,7 +86,7 @@ public class DownloadItem extends JPanel {
         ImageIcon newFolderIcon = new ImageIcon("folder.png");
         //--> resizing image
         originalImg = newFolderIcon.getImage();
-        newImg = originalImg.getScaledInstance(35, 35, java.awt.Image.SCALE_SMOOTH);
+        newImg = originalImg.getScaledInstance(15, 15, java.awt.Image.SCALE_SMOOTH);
         newFolderIcon = new ImageIcon(newImg);
         //<--
         openFolderButton = new JButton(newFolderIcon);
@@ -96,7 +100,7 @@ public class DownloadItem extends JPanel {
         ImageIcon addToQueueIcon = new ImageIcon("newDownload.png");
         //--> resizing image
         originalImg = addToQueueIcon.getImage();
-        newImg = originalImg.getScaledInstance(35, 35, java.awt.Image.SCALE_SMOOTH);
+        newImg = originalImg.getScaledInstance(15, 15, java.awt.Image.SCALE_SMOOTH);
         addToQueueIcon = new ImageIcon(newImg);
         //<--
         addToQueue = new JButton(addToQueueIcon);
@@ -105,6 +109,20 @@ public class DownloadItem extends JPanel {
         Border marginOfAddToQueue = new EmptyBorder(0, 0, 0, 0);
         addToQueue.setBorder(new CompoundBorder(borderOfAddToQueue, marginOfAddToQueue));
         addToQueue.setContentAreaFilled(false);
+
+        //removeFromQueue
+        ImageIcon removeFromQueueIcon = new ImageIcon("cancel.png");
+        //--> resizing image
+        originalImg = removeFromQueueIcon.getImage();
+        newImg = originalImg.getScaledInstance(15, 15, java.awt.Image.SCALE_SMOOTH);
+        removeFromQueueIcon = new ImageIcon(newImg);
+        //<--
+        removeFromQueue = new JButton(removeFromQueueIcon);
+        removeFromQueue.setBorder(null);
+        Border borderOfRemoveFromQueue = removeFromQueue.getBorder();
+        Border marginOfRemoveFromQueue = new EmptyBorder(0, 0, 0, 0);
+        removeFromQueue.setBorder(new CompoundBorder(borderOfRemoveFromQueue, marginOfRemoveFromQueue));
+        removeFromQueue.setContentAreaFilled(false);
 
         /**
          * config GUI components
@@ -133,6 +151,7 @@ public class DownloadItem extends JPanel {
         add(sizeArea);
         add(openFolderButton);
         add(addToQueue);
+        add(removeFromQueue);
         add(downloadedSizeArea);
         add(downloadSpeedArea);
         add(downloadItemTitleLabel);
@@ -157,30 +176,35 @@ public class DownloadItem extends JPanel {
         downloadItemLayout.putConstraint(SpringLayout.WEST, sizeArea, 10, SpringLayout.EAST, downloadedSizeArea);
         //JTextArea Speed
         downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadSpeedArea, 10, SpringLayout.SOUTH, downloadItemProgressbar);
-        downloadItemLayout.putConstraint(SpringLayout.EAST, downloadSpeedArea, -10, SpringLayout.EAST, this);
+        downloadItemLayout.putConstraint(SpringLayout.EAST, downloadSpeedArea, -15, SpringLayout.EAST, this);
         //JButton openFolderButton
-        downloadItemLayout.putConstraint(SpringLayout.NORTH, openFolderButton, 5, SpringLayout.SOUTH, downloadItemProgressbar);
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, openFolderButton, 10, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.EAST, openFolderButton, -10, SpringLayout.WEST, downloadSpeedArea);
         //JButton addToQueue
-        downloadItemLayout.putConstraint(SpringLayout.NORTH, addToQueue, 5, SpringLayout.SOUTH, downloadItemProgressbar);
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, addToQueue, 10, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.EAST, addToQueue, -10, SpringLayout.WEST, openFolderButton);
+        //JButton removeFromQueue
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, removeFromQueue, 10, SpringLayout.SOUTH, downloadItemProgressbar);
+        downloadItemLayout.putConstraint(SpringLayout.EAST, removeFromQueue, -10, SpringLayout.WEST, addToQueue);
 
         /**
          * adding handler to open folder icon
          */
-        OpenFolderButtonListener openFolderButtonListener = new OpenFolderButtonListener(this);
-
+        DownloadItemButtonListener downloadItemButtonListener = new DownloadItemButtonListener(this, downloadItemsConnection);
+        openFolderButton.addActionListener(downloadItemButtonListener);
+        addToQueue.addActionListener(downloadItemButtonListener);
+        removeFromQueue.addActionListener(downloadItemButtonListener);
 
         setVisible(true);
-
-
     }
 
-    public class OpenFolderButtonListener implements ActionListener {
+    public class DownloadItemButtonListener implements ActionListener {
         private DownloadItem downloadItem;
+        private DownloadItemsConnection downloadItemsConnection;
 
-        public OpenFolderButtonListener(DownloadItem downloadItem) {
+        public DownloadItemButtonListener(DownloadItem downloadItem, DownloadItemsConnection downloadItemsConnection) {
             this.downloadItem = downloadItem;
+            this.downloadItemsConnection = downloadItemsConnection;
         }
 
         @Override
@@ -196,7 +220,11 @@ public class DownloadItem extends JPanel {
                 }
             }
             if (e.getSource() == addToQueue) {
-                AddToQueue addToQueue = new AddToQueue();
+                AddRemoveFromQueue addRemoveFromQueue = new AddRemoveFromQueue(downloadItemsConnection, downloadItem, "add");
+            }
+            if (e.getSource() == removeFromQueue) {
+                AddRemoveFromQueue addRemoveFromQueue = new AddRemoveFromQueue(downloadItemsConnection, downloadItem, "remove");
+
             }
         }
     }

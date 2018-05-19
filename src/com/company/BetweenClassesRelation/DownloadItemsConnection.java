@@ -7,8 +7,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public interface DownloadItemsConnection {
+    //--->
     HashSet<DownloadItem> getSelectedItems();
 
     void addToSelectedItem(DownloadItem selectedItem);
@@ -21,7 +23,14 @@ public interface DownloadItemsConnection {
 
     void cancelSelectedItem(DownloadItem selectedItem);
 
+    //<--
+
+    //-->
     HashMap<String, DownloadQueue> getDownloadQueues();
+
+    void addNewQueue(String Key, DownloadItem downloadItem);
+
+    //<--
 
     int getSimultaneousDownloads();
 
@@ -32,5 +41,7 @@ public interface DownloadItemsConnection {
     void addToDownloadItems(DownloadItem downloadItem);
 
     void removeFromDownloadItems(DownloadItem downloadItem);
+
+    void reloadBody();
 
 }

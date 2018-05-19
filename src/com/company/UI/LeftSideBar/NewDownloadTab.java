@@ -85,7 +85,7 @@ public class NewDownloadTab extends JFrame {
          */
         NewDownloadTabHandler newDownloadTabHandler = new NewDownloadTabHandler(this, downloadItemsConnection, newDownloadItemConnection);
         submit.addActionListener(newDownloadTabHandler);
-        
+
         setVisible(true);
     }
 
@@ -130,7 +130,7 @@ public class NewDownloadTab extends JFrame {
             if (event.getSource() == submit) {
                 String downloadLink = link.getText();
                 String downloadName = name.getText();
-                DownloadItem newDownloadItem = new DownloadItem(downloadName, "In Progress", downloadLink,0,0, 0, StaticData.getLocation());
+                DownloadItem newDownloadItem = new DownloadItem(downloadName, "In Progress", downloadLink, 0, 0, 0, StaticData.getLocation(), downloadItemsConnection);
                 System.out.println(newDownloadItem);
                 newDownloadItemConnection.addToDownloadPanel(newDownloadItem);
                 DownloadItemMouseHandler downloadItemMouseHandler = new DownloadItemMouseHandler(downloadItemsConnection);

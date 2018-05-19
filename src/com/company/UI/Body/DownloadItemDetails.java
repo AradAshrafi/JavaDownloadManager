@@ -21,6 +21,7 @@ public class DownloadItemDetails extends JFrame {
         JLabel titleLabel = new JLabel("title");
         JTextArea title = new JTextArea();
         title.setText(downloadItem.getTitle());
+        title.setEditable(false);
         add(titleLabel);
         add(title);
         //percentage

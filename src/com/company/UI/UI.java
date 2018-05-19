@@ -13,6 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class UI extends JFrame implements DownloadItemsConnection, NewDownloadItemConnection {
     private BorderLayout UILayout;
@@ -121,6 +122,14 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     }
 
     @Override
+    public void addNewQueue(String key, DownloadItem downloadItem) {
+        DownloadQueue newQueue = new DownloadQueue();
+        newQueue.getQueue().add(downloadItem);
+        downloadQueues.put(key, newQueue);
+    }
+
+
+    @Override
     public int getSimultaneousDownloads() {
         return simultaneousDownloads;
     }
@@ -153,6 +162,12 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     @Override
     public void removeFromDownloadItems(DownloadItem downloadItem) {
         downloadItems.remove(downloadItem);
+    }
+
+    @Override
+    public void reloadBody() {
+        body.repaint();
+        body.revalidate();
     }
 
 }
