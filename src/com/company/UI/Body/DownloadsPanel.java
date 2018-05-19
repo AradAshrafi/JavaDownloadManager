@@ -30,6 +30,7 @@ public class DownloadsPanel extends JPanel {
         mainQueue = new DownloadQueue();
         downloadItemsConnection = (DownloadItemsConnection) (ui);
         selectedItems = downloadItemsConnection.getSelectedItems();
+        mainQueue.setQueue(downloadItemsConnection.getDownloadItems());
         downloadsPanelLayout = new FlowLayout(FlowLayout.LEFT);
         setLayout(downloadsPanelLayout);
         setPreferredSize(new Dimension(700, 500));

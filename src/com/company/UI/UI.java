@@ -5,10 +5,12 @@ import com.company.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.Body;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadQueue;
+import com.company.UI.Body.DownloadsPanel;
 import com.company.UI.LeftSideBar.LeftSideBar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -18,6 +20,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     private LeftSideBar leftSideBar;
     private Body body;
     //--> for between class relation
+    private ArrayList<DownloadItem> downloadItems;
     private HashSet<DownloadItem> selectedItems;
     private HashMap<String, DownloadQueue> downloadQueues;
     private int simultaneousDownloads = 1000;
@@ -26,6 +29,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         super("UI");
         UILayout = new BorderLayout();
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        downloadItems = new ArrayList<>();
         selectedItems = new HashSet<>();
         downloadQueues = new HashMap<>();
         downloadQueues.put("main", new DownloadQueue());
@@ -70,6 +74,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         System.out.println("remove");
         System.out.println("size : " + selectedItems.size());
         selectedItems.remove(selectedItem);
+        removeFromDownloadItems(selectedItem);
         body.getDownloadsPanel().getMainQueue().operationOnDownloadQueue(selectedItem, "remove");
         body.getDownloadsPanel().remove(selectedItem);
         body.getDownloadsPanel().revalidate();
@@ -125,13 +130,29 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         this.simultaneousDownloads = simultaneousDownloads;
     }
 
+
     @Override
     public void addToDownloadPanel(DownloadItem newDownloadItem) {
         body.getDownloadsPanel().add(newDownloadItem);
         body.getDownloadsPanel().getMainQueue().operationOnDownloadQueue(newDownloadItem, "add");
+        addToDownloadItems(newDownloadItem);
         body.revalidate();
         body.repaint();
     }
 
+    @Override
+    public ArrayList<DownloadItem> getDownloadItems() {
+        return downloadItems;
+    }
+
+    @Override
+    public void addToDownloadItems(DownloadItem downloadItem) {
+        downloadItems.add(downloadItem);
+    }
+
+    @Override
+    public void removeFromDownloadItems(DownloadItem downloadItem) {
+        downloadItems.remove(downloadItem);
+    }
 
 }

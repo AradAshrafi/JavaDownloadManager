@@ -8,6 +8,11 @@ public class DownloadQueue {
     public ArrayList<DownloadItem> getQueue() {
         return queue;
     }
+
+    public void setQueue(ArrayList<DownloadItem> queue) {
+        this.queue = queue;
+    }
+
     public DownloadQueue() {
         queue = new ArrayList<>();
     }

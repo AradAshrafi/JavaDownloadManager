@@ -27,4 +27,10 @@ public interface DownloadItemsConnection {
 
     void setSimultaneousDownloads(int simultaneousDownloads);
 
+    ArrayList<DownloadItem> getDownloadItems();
+
+    void addToDownloadItems(DownloadItem downloadItem);
+
+    void removeFromDownloadItems(DownloadItem downloadItem);
+
 }

@@ -32,6 +32,7 @@ public class DownloadItem extends JPanel {
      * GUI representation of data fields
      */
     private JButton openFolderButton;
+    private JButton addToQueue;
     private JLabel downloadItemTitleLabel;
     private JProgressBar downloadItemProgressbar;
     private JTextArea sizeArea, downloadedSizeArea, downloadSpeedArea;
@@ -73,7 +74,9 @@ public class DownloadItem extends JPanel {
          */
         /**
          * handling settingsButton and it's image
+         * handling addToQueueButton and it's image
          */
+        //openFolderButton
         Image originalImg;
         Image newImg;
         ImageIcon newFolderIcon = new ImageIcon("folder.png");
@@ -84,10 +87,24 @@ public class DownloadItem extends JPanel {
         //<--
         openFolderButton = new JButton(newFolderIcon);
         openFolderButton.setBorder(null);
-        Border borderOfSettingsButton = openFolderButton.getBorder();
-        Border marginOfSettingsButton = new EmptyBorder(0, 0, 0, 0);
-        openFolderButton.setBorder(new CompoundBorder(borderOfSettingsButton, marginOfSettingsButton));
+        Border borderOfOpenFolderButton = openFolderButton.getBorder();
+        Border marginOfOpenFolderButton = new EmptyBorder(0, 0, 0, 0);
+        openFolderButton.setBorder(new CompoundBorder(borderOfOpenFolderButton, marginOfOpenFolderButton));
         openFolderButton.setContentAreaFilled(false);
+
+        //addToQueue
+        ImageIcon addToQueueIcon = new ImageIcon("newDownload.png");
+        //--> resizing image
+        originalImg = addToQueueIcon.getImage();
+        newImg = originalImg.getScaledInstance(35, 35, java.awt.Image.SCALE_SMOOTH);
+        addToQueueIcon = new ImageIcon(newImg);
+        //<--
+        addToQueue = new JButton(addToQueueIcon);
+        addToQueue.setBorder(null);
+        Border borderOfAddToQueue = addToQueue.getBorder();
+        Border marginOfAddToQueue = new EmptyBorder(0, 0, 0, 0);
+        addToQueue.setBorder(new CompoundBorder(borderOfAddToQueue, marginOfAddToQueue));
+        addToQueue.setContentAreaFilled(false);
 
         /**
          * config GUI components
@@ -96,11 +113,11 @@ public class DownloadItem extends JPanel {
         downloadItemProgressbar.setStringPainted(true);
         downloadItemProgressbar.setValue(percentage);
         downloadItemProgressbar.setString("status : " + status + "                                                      " + percentage + "%");//:D
-        sizeArea.setText(size + "");
+        sizeArea.setText(size + "Kb");
         sizeArea.setForeground(Color.blue);
-        downloadedSizeArea.setText((size * percentage / 100) + "");
+        downloadedSizeArea.setText((size * percentage / 100) + "Kb");
         downloadedSizeArea.setForeground(Color.blue);
-        downloadSpeedArea.setText("0 Kb/s");
+        downloadSpeedArea.setText("1 Kb/s");
         downloadSpeedArea.setForeground(Color.blue);
         ;
 
@@ -115,6 +132,7 @@ public class DownloadItem extends JPanel {
         setPreferredSize(new Dimension(700, 100));
         add(sizeArea);
         add(openFolderButton);
+        add(addToQueue);
         add(downloadedSizeArea);
         add(downloadSpeedArea);
         add(downloadItemTitleLabel);
@@ -133,8 +151,8 @@ public class DownloadItem extends JPanel {
         downloadItemLayout.putConstraint(SpringLayout.EAST, downloadItemProgressbar, -10, SpringLayout.EAST, this);
         //JTextArea downloadedSizeArea
         downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadedSizeArea, 10, SpringLayout.SOUTH, downloadItemProgressbar);
-        downloadItemLayout.putConstraint(SpringLayout.WEST, downloadedSizeArea, 10, SpringLayout.WEST, this);
-        //JTextArea  size
+        downloadItemLayout.putConstraint(SpringLayout.WEST, downloadedSizeArea, 50, SpringLayout.WEST, this);
+        //JTextArea size
         downloadItemLayout.putConstraint(SpringLayout.NORTH, sizeArea, 10, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.WEST, sizeArea, 10, SpringLayout.EAST, downloadedSizeArea);
         //JTextArea Speed
@@ -143,13 +161,14 @@ public class DownloadItem extends JPanel {
         //JButton openFolderButton
         downloadItemLayout.putConstraint(SpringLayout.NORTH, openFolderButton, 5, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.EAST, openFolderButton, -10, SpringLayout.WEST, downloadSpeedArea);
-
+        //JButton addToQueue
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, addToQueue, 5, SpringLayout.SOUTH, downloadItemProgressbar);
+        downloadItemLayout.putConstraint(SpringLayout.EAST, addToQueue, -10, SpringLayout.WEST, openFolderButton);
 
         /**
          * adding handler to open folder icon
          */
-        OpenFolderButtonListenr openFolderButtonListenr = new OpenFolderButtonListenr(this);
-        openFolderButton.addActionListener(openFolderButtonListenr);
+        OpenFolderButtonListener openFolderButtonListener = new OpenFolderButtonListener(this);
 
 
         setVisible(true);
@@ -157,10 +176,10 @@ public class DownloadItem extends JPanel {
 
     }
 
-    public class OpenFolderButtonListenr implements ActionListener {
+    public class OpenFolderButtonListener implements ActionListener {
         private DownloadItem downloadItem;
 
-        public OpenFolderButtonListenr(DownloadItem downloadItem) {
+        public OpenFolderButtonListener(DownloadItem downloadItem) {
             this.downloadItem = downloadItem;
         }
 
@@ -175,6 +194,9 @@ public class DownloadItem extends JPanel {
                         System.out.println("invalid path");
                     }
                 }
+            }
+            if (e.getSource() == addToQueue) {
+                AddToQueue addToQueue = new AddToQueue();
             }
         }
     }

@@ -15,6 +15,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Queue;
 
 public class LeftSideBar extends JPanel {
     private JMenuBar leftSideBarMenu;
@@ -183,6 +184,15 @@ public class LeftSideBar extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
+            if(event.getSource()==processing){
+
+            }
+            if(event.getSource()==completed){
+
+            }
+            if(event.getSource()==queues){
+
+            }
             if (event.getSource() == newDownload) {
                 NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection, downloadItemsConnection); //:))))
             }

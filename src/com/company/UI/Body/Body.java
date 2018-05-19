@@ -4,14 +4,12 @@ import com.company.UI.UI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 
 public class Body extends JPanel {
     private DownloadsPanel downloadsPanel;
     private JPanel contentPane;
     private JScrollPane downloadsPanelScrollbar;
-    private ArrayList<DownloadQueue> downloadQueues;
 
     public Body(UI ui) {
         setLayout(new GridLayout(0, 1));
@@ -33,6 +31,7 @@ public class Body extends JPanel {
         add(contentPane);
         setVisible(true);
     }
+    public void setDownloadsPanel(JPanel newPanel){}
 
     public DownloadsPanel getDownloadsPanel() {
         return downloadsPanel;
