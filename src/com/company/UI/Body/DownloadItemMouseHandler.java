@@ -6,11 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 
 public class DownloadItemMouseHandler implements MouseListener {
     private HashSet<DownloadItem> selectedItems;
-
 
     public DownloadItemMouseHandler(DownloadItemsConnection downloadItemsConnection) {
         this.selectedItems = downloadItemsConnection.getSelectedItems();
@@ -19,10 +20,19 @@ public class DownloadItemMouseHandler implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (SwingUtilities.isRightMouseButton(e) && e.getClickCount() == 1) {
-
+            System.out.println("Right Click");
+            DownloadItemDetails downloadItemDetails = new DownloadItemDetails((DownloadItem) (e.getSource()));
         }
-        if (e.getClickCount() == 2) {
-
+        if (e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(e)) {
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    DownloadItem downloadItem = (DownloadItem) (e.getSource());
+                    File myFile = new File(downloadItem.getLocationOfStorage() + downloadItem.getTitle());
+                    Desktop.getDesktop().open(myFile);
+                } catch (IOException ex) {
+                    System.out.println("invalid path");
+                }
+            }
         }
     }
 

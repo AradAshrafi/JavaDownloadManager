@@ -1,7 +1,14 @@
 package com.company.UI.Body;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class DownloadItem extends JPanel {
     /**
@@ -9,15 +16,22 @@ public class DownloadItem extends JPanel {
      */
     private String title;
     private String status;
-    private String url;
     private int percentage;
     private int size;
     private int downloadSpeed;
-    private String locationOfStorage;
     private SpringLayout downloadItemLayout;
+    /**
+     * secret data that will show in downloadItemDetail after right click on each item
+     */
+    private long date;
+    private String locationOfStorage;
+    private String url;
+
+
     /**
      * GUI representation of data fields
      */
+    private JButton openFolderButton;
     private JLabel downloadItemTitleLabel;
     private JProgressBar downloadItemProgressbar;
     private JTextArea sizeArea, downloadedSizeArea, downloadSpeedArea;
@@ -39,18 +53,41 @@ public class DownloadItem extends JPanel {
         this.size = size;
         this.downloadSpeed = downloadSpeed;
         this.percentage = percentage;
+        this.date = System.currentTimeMillis();
         this.locationOfStorage = locationOfStorage;
 
 
         /**
          * make GUI components
          */
+//        openFolderButton = new JButton(); //its useless due to new another JButton down here
         downloadItemLayout = new SpringLayout();
         downloadItemTitleLabel = new JLabel();
         downloadItemProgressbar = new JProgressBar();
         sizeArea = new JTextArea();
         downloadedSizeArea = new JTextArea();
         downloadSpeedArea = new JTextArea();
+
+        /**
+         * config openFolder Button
+         */
+        /**
+         * handling settingsButton and it's image
+         */
+        Image originalImg;
+        Image newImg;
+        ImageIcon newFolderIcon = new ImageIcon("folder.png");
+        //--> resizing image
+        originalImg = newFolderIcon.getImage();
+        newImg = originalImg.getScaledInstance(35, 35, java.awt.Image.SCALE_SMOOTH);
+        newFolderIcon = new ImageIcon(newImg);
+        //<--
+        openFolderButton = new JButton(newFolderIcon);
+        openFolderButton.setBorder(null);
+        Border borderOfSettingsButton = openFolderButton.getBorder();
+        Border marginOfSettingsButton = new EmptyBorder(0, 0, 0, 0);
+        openFolderButton.setBorder(new CompoundBorder(borderOfSettingsButton, marginOfSettingsButton));
+        openFolderButton.setContentAreaFilled(false);
 
         /**
          * config GUI components
@@ -64,7 +101,8 @@ public class DownloadItem extends JPanel {
         downloadedSizeArea.setText((size * percentage / 100) + "");
         downloadedSizeArea.setForeground(Color.blue);
         downloadSpeedArea.setText("0 Kb/s");
-        downloadSpeedArea.setForeground(Color.blue);;
+        downloadSpeedArea.setForeground(Color.blue);
+        ;
 
         /**
          * place components in Layout
@@ -76,6 +114,7 @@ public class DownloadItem extends JPanel {
          */
         setPreferredSize(new Dimension(700, 100));
         add(sizeArea);
+        add(openFolderButton);
         add(downloadedSizeArea);
         add(downloadSpeedArea);
         add(downloadItemTitleLabel);
@@ -93,19 +132,51 @@ public class DownloadItem extends JPanel {
         downloadItemLayout.putConstraint(SpringLayout.WEST, downloadItemProgressbar, 10, SpringLayout.EAST, downloadItemTitleLabel);
         downloadItemLayout.putConstraint(SpringLayout.EAST, downloadItemProgressbar, -10, SpringLayout.EAST, this);
         //JTextArea downloadedSizeArea
-        downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadedSizeArea, 10, SpringLayout.SOUTH, downloadItemTitleLabel);
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadedSizeArea, 10, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.WEST, downloadedSizeArea, 10, SpringLayout.WEST, this);
         //JTextArea  size
-        downloadItemLayout.putConstraint(SpringLayout.NORTH, sizeArea, 10, SpringLayout.SOUTH, downloadItemTitleLabel);
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, sizeArea, 10, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.WEST, sizeArea, 10, SpringLayout.EAST, downloadedSizeArea);
         //JTextArea Speed
-        downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadSpeedArea, 10, SpringLayout.SOUTH, downloadItemTitleLabel);
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, downloadSpeedArea, 10, SpringLayout.SOUTH, downloadItemProgressbar);
         downloadItemLayout.putConstraint(SpringLayout.EAST, downloadSpeedArea, -10, SpringLayout.EAST, this);
+        //JButton openFolderButton
+        downloadItemLayout.putConstraint(SpringLayout.NORTH, openFolderButton, 5, SpringLayout.SOUTH, downloadItemProgressbar);
+        downloadItemLayout.putConstraint(SpringLayout.EAST, openFolderButton, -10, SpringLayout.WEST, downloadSpeedArea);
+
+
+        /**
+         * adding handler to open folder icon
+         */
+        OpenFolderButtonListenr openFolderButtonListenr = new OpenFolderButtonListenr(this);
+        openFolderButton.addActionListener(openFolderButtonListenr);
 
 
         setVisible(true);
 
 
+    }
+
+    public class OpenFolderButtonListenr implements ActionListener {
+        private DownloadItem downloadItem;
+
+        public OpenFolderButtonListenr(DownloadItem downloadItem) {
+            this.downloadItem = downloadItem;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == openFolderButton) {
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File(downloadItem.getLocationOfStorage());
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+                        System.out.println("invalid path");
+                    }
+                }
+            }
+        }
     }
 
     public String getStatus() {
@@ -137,4 +208,31 @@ public class DownloadItem extends JPanel {
 //        revalidate();
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public int getSizeOfDownload() {
+        return size;
+    }
+
+    public int getDownloadSpeed() {
+        return downloadSpeed;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public String getLocationOfStorage() {
+        return locationOfStorage;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }
