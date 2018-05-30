@@ -26,7 +26,7 @@ public class DownloadItem extends JPanel {
     /**
      * secret data that will show in downloadItemDetail after right click on each item
      */
-    private long date;
+    private String date;
     private String locationOfStorage;
     private String url;
 
@@ -57,7 +57,7 @@ public class DownloadItem extends JPanel {
         this.status = downloadItemData.getData().get("status");
         this.url = downloadItemData.getData().get("url");
         this.locationOfStorage = downloadItemData.getData().get("locationOfStorage");
-        this.date = Long.parseLong(downloadItemData.getData().get("date"));
+        this.date = downloadItemData.getData().get("date");
         this.size = Integer.parseInt(downloadItemData.getData().get("size"));
         this.percentage = Integer.parseInt(downloadItemData.getData().get("percentage"));
 
@@ -141,7 +141,6 @@ public class DownloadItem extends JPanel {
         downloadedSizeArea.setForeground(Color.black);
         downloadSpeedArea.setText("1 Kb/s");
         downloadSpeedArea.setForeground(Color.black);
-        ;
 
         /**
          * place components in Layout
@@ -283,7 +282,7 @@ public class DownloadItem extends JPanel {
         return downloadSpeed;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 

@@ -1,5 +1,8 @@
 package com.company.UI.Body;
 
+import com.company.DownloadItemData.DownloadItemData;
+import com.company.FileOperation.Id;
+import com.company.FileOperation.ListJDM;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.BetweenClassesRelation.StaticData;
 import com.company.UI.UI;
@@ -37,22 +40,35 @@ public class DownloadsPanel extends JPanel {
         setForeground(Color.decode("#81A3A7"));
         setBackground(Color.decode("#8ED3F4"));
 
-        DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, 100, 0, StaticData.getLocation(), downloadItemsConnection);
-        DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, 0, 0, "d://", downloadItemsConnection);
-        DownloadItem sample3 = new DownloadItem("test", "failed", "https://", 20, 1000, 0, "d://", downloadItemsConnection);
+        ArrayList<DownloadItemData> savedDownloadsList = ListJDM.getDownloadsList();
+        Iterator<DownloadItemData> savedDownloadsListIterator = savedDownloadsList.iterator();
 
-        mainQueue.operationOnDownloadQueue(sample1, "add");
-        mainQueue.operationOnDownloadQueue(sample2, "add");
-        mainQueue.operationOnDownloadQueue(sample3, "add");
+        while (savedDownloadsListIterator.hasNext()) {
+            DownloadItemData currentDownloadItemData = savedDownloadsListIterator.next();
+            DownloadItem currentDownloadItem = new DownloadItem(currentDownloadItemData, 0, downloadItemsConnection);
+            mainQueue.operationOnDownloadQueue(currentDownloadItem, "add");
+        }
 
-        Iterator<DownloadItem> it = mainQueue.getQueue().iterator();
+//        DownloadItemData newDownloadItemData1 = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, 0, System.currentTimeMillis());
+//        DownloadItemData newDownloadItemData2 = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, 0, System.currentTimeMillis());
+//        DownloadItemData newDownloadItemData3 = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, 0, System.currentTimeMillis());
+//
+//        DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, 100, 0, StaticData.getLocation(), downloadItemsConnection);
+//        DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, 0, 0, "d://", downloadItemsConnection);
+//        DownloadItem sample3 = new DownloadItem("test", "failed", "https://", 20, 1000, 0, "d://", downloadItemsConnection);
+
+//        mainQueue.operationOnDownloadQueue(sample1, "add");
+//        mainQueue.operationOnDownloadQueue(sample2, "add");
+//        mainQueue.operationOnDownloadQueue(sample3, "add");
+
+        Iterator<DownloadItem> handlerIt = mainQueue.getQueue().iterator();
         /**
          * Adding items to Layout and handle their actionListener
          */
         DownloadItemMouseHandler handler = new DownloadItemMouseHandler(downloadItemsConnection);
-        while (it.hasNext()) {
+        while (handlerIt.hasNext()) {
             System.out.println("check");
-            DownloadItem item = it.next();
+            DownloadItem item = handlerIt.next();
             item.addMouseListener(handler);
             if (selectedItems.contains(item)) {
                 setBackground(Color.red);

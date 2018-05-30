@@ -1,6 +1,10 @@
 package com.company.UI.LeftSideBar;
 
 import com.company.BetweenClassesRelation.StaticData;
+import com.company.DownloadItemData.CurrentDate;
+import com.company.DownloadItemData.DownloadItemData;
+import com.company.FileOperation.Id;
+import com.company.FileOperation.ListJDM;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.DownloadItem;
@@ -126,12 +130,20 @@ public class NewDownloadTab extends JFrame {
         }
 
         @Override
+        /**
+         * handling new downloads required procedure
+         */
         public void actionPerformed(ActionEvent event) {
             if (event.getSource() == submit) {
                 String downloadLink = link.getText();
                 String downloadName = name.getText();
-                DownloadItem newDownloadItem = new DownloadItem(downloadName, "In Progress", downloadLink, 0, 0, 0, StaticData.getLocation(), downloadItemsConnection);
-                System.out.println(newDownloadItem);
+                //making new downloadItem data after getting them from user and make a new download item in panel
+                DownloadItemData newDownloadItemData = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, 0, CurrentDate.getCurrentDateWithDefaultFormat());
+                //write download data to ListJDM file
+                ListJDM.newDownload(newDownloadItemData);
+                DownloadItem newDownloadItem = new DownloadItem(newDownloadItemData, 0, downloadItemsConnection);
+                //incrementing the unique id :D
+                Id.increment();
                 newDownloadItemConnection.addToDownloadPanel(newDownloadItem);
                 DownloadItemMouseHandler downloadItemMouseHandler = new DownloadItemMouseHandler(downloadItemsConnection);
                 newDownloadItem.addMouseListener(downloadItemMouseHandler);

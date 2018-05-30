@@ -6,7 +6,7 @@ public class DownloadItemData {
     private String Id;
     private HashMap<String, String> data;
 
-    public DownloadItemData(String id, String title, String url, String status, String locationOfStorage, int size, int percentage, long date) {
+    public DownloadItemData(String id, String title, String url, String status, String locationOfStorage, int size, int percentage, String date) {
         data = new HashMap<>();
         Id = id;
         data.put("title", title);
@@ -15,10 +15,20 @@ public class DownloadItemData {
         data.put("locationOfStorage", locationOfStorage);
         data.put("size", Integer.toString(size));
         data.put("percentage", Integer.toString(percentage));
-        data.put("date", Long.toString(date));
+        data.put("date", date);
+    }
+
+    public DownloadItemData(String id) {
+        data = new HashMap<>();
+        Id = id;
+    }
+
+    public String getId() {
+        return Id;
     }
 
     public HashMap<String, String> getData() {
+
         return data;
     }
 }
