@@ -1,8 +1,8 @@
 package com.company.UI.LeftSideBar;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
-import com.company.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.BetweenClassesRelation.StaticData;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadItemMouseHandler;
 import com.company.UI.Body.DownloadsPanel;

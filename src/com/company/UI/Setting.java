@@ -1,6 +1,6 @@
 package com.company.UI;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.Body.MyFileChooser;
 import com.company.UI.LeftSideBar.LookAndFeelManager;
 
@@ -22,8 +22,8 @@ public class Setting extends JFrame {
 //    private JFileChooser locationChooser;
 
 
-    public Setting(Container container, DownloadItemsConnection downloadItemsConnection) {
-        this.uiContainer = container;
+    public Setting(DownloadItemsConnection downloadItemsConnection) {
+        this.uiContainer = downloadItemsConnection.getUiContainer();
         this.simultaneousDownloadsValue = downloadItemsConnection.getSimultaneousDownloads();
         /**
          * handling Layout
@@ -39,10 +39,10 @@ public class Setting extends JFrame {
          */
         simultaneousDownloadsLabel = new JLabel();
         simultaneousDownloadsLabel.setText("Simultaneous Downloads : ");
-        simultaneousDownloads = new JSlider(JSlider.HORIZONTAL, 0, 500, 500);
+        simultaneousDownloads = new JSlider(JSlider.HORIZONTAL, 0, 50, 50);
         simultaneousDownloads.setForeground(Color.BLUE);
 //        simultaneousDownloads.setMinorTickSpacing(100);
-        simultaneousDownloads.setMajorTickSpacing(50);
+        simultaneousDownloads.setMajorTickSpacing(5);
         simultaneousDownloads.setPaintTicks(true);
         simultaneousDownloads.setPaintLabels(true);
         simultaneousDownloads.setPaintTrack(true);

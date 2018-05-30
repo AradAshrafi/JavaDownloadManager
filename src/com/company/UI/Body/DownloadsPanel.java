@@ -1,6 +1,6 @@
 package com.company.UI.Body;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.BetweenClassesRelation.StaticData;
 import com.company.UI.UI;
 
@@ -22,13 +22,13 @@ public class DownloadsPanel extends JPanel {
         return mainQueue;
     }
 
-    public DownloadsPanel(UI ui) {
+    public DownloadsPanel(DownloadItemsConnection downloadItemsConnection) {
         /**
          * some initialization
          * casting ui to DownloadItemsConnection for some access
          */
         mainQueue = new DownloadQueue();
-        downloadItemsConnection = (DownloadItemsConnection) (ui);
+        this.downloadItemsConnection = downloadItemsConnection;
         selectedItems = downloadItemsConnection.getSelectedItems();
         mainQueue.setQueue(downloadItemsConnection.getDownloadItems());
         downloadsPanelLayout = new FlowLayout(FlowLayout.LEFT);
@@ -40,18 +40,12 @@ public class DownloadsPanel extends JPanel {
         DownloadItem sample1 = new DownloadItem("test", "failed", "https://", 20, 100, 0, StaticData.getLocation(), downloadItemsConnection);
         DownloadItem sample2 = new DownloadItem("test", "failed", "https://", 20, 0, 0, "d://", downloadItemsConnection);
         DownloadItem sample3 = new DownloadItem("test", "failed", "https://", 20, 1000, 0, "d://", downloadItemsConnection);
-        DownloadItem sample4 = new DownloadItem("test", "failed", "https://", 20, 120, 0, StaticData.getLocation(), downloadItemsConnection);
-        DownloadItem sample5 = new DownloadItem("test", "failed", "https://", 20, 15, 0, StaticData.getLocation(), downloadItemsConnection);
 
         mainQueue.operationOnDownloadQueue(sample1, "add");
         mainQueue.operationOnDownloadQueue(sample2, "add");
-//        mainQueue.operationOnDownloadQueue(sample3, "add");
-//        mainQueue.operationOnDownloadQueue(sample4, "add");
-//        mainQueue.operationOnDownloadQueue(sample5, "add");
+        mainQueue.operationOnDownloadQueue(sample3, "add");
 
         Iterator<DownloadItem> it = mainQueue.getQueue().iterator();
-
-
         /**
          * Adding items to Layout and handle their actionListener
          */

@@ -1,6 +1,6 @@
 package com.company.UI.LeftSideBar;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadQueue;
 

@@ -1,6 +1,6 @@
 package com.company.UI.Body;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,5 +1,6 @@
 package com.company.UI.Body;
 
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.UI;
 
 import javax.swing.*;
@@ -11,14 +12,14 @@ public class Body extends JPanel {
     private JPanel contentPane;
     private JScrollPane downloadsPanelScrollbar;
 
-    public Body(UI ui) {
+    public Body(DownloadItemsConnection downloadItemsConnection) {
         setLayout(new GridLayout(0, 1));
 
         contentPane = new JPanel(new GridLayout(0, 1));
         /**
          * passing ui to DownloadPanel constructor to cast it in future
          */
-        downloadsPanel = new DownloadsPanel(ui);
+        downloadsPanel = new DownloadsPanel(downloadItemsConnection);
         downloadsPanelScrollbar = new JScrollPane(downloadsPanel);
         downloadsPanelScrollbar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         downloadsPanelScrollbar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -32,7 +33,9 @@ public class Body extends JPanel {
         add(contentPane);
         setVisible(true);
     }
-    public void setDownloadsPanel(JPanel newPanel){}
+
+    public void setDownloadsPanel(JPanel newPanel) {
+    }
 
     public DownloadsPanel getDownloadsPanel() {
         return downloadsPanel;

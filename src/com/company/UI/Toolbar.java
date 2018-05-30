@@ -1,7 +1,7 @@
 package com.company.UI;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
-import com.company.BetweenClassesRelation.NewDownloadItemConnection;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.LeftSideBar.LookAndFeelManager;
 import com.company.UI.LeftSideBar.NewDownloadTab;
@@ -28,7 +28,7 @@ public class Toolbar extends JPanel {
     private JLabel verticalSeparator2;
     private JLabel logo;
 
-    public Toolbar(UI ui) {
+    public Toolbar(DownloadItemsConnection downloadItemsConnection, NewDownloadItemConnection newDownloadItemConnection) {
         Image originalImg;
         Image newImg;
         toolbarLayout = new FlowLayout(FlowLayout.LEFT);
@@ -183,7 +183,7 @@ public class Toolbar extends JPanel {
         /**
          * add handler to components
          */
-        ToolBarHandler toolBarHandler = new ToolBarHandler(ui);
+        ToolBarHandler toolBarHandler = new ToolBarHandler(downloadItemsConnection, newDownloadItemConnection);
         newDownloadButton.addActionListener(toolBarHandler);
         resumeButton.addActionListener(toolBarHandler);
         pauseButton.addActionListener(toolBarHandler);
@@ -199,17 +199,15 @@ public class Toolbar extends JPanel {
         private HashSet<DownloadItem> selectedItems;
         private DownloadItemsConnection downloadItemsConnection;
         private NewDownloadItemConnection newDownloadItemConnection;
-        private Container uiContainer;
 
 
-        public ToolBarHandler(UI ui) {
+        public ToolBarHandler(DownloadItemsConnection downloadItemsConnection, NewDownloadItemConnection newDownloadItemConnection) {
             /**
              * casting ui to interface to use it's functionality
              * cast it to NewDownloadItem to change body panel
              */
-            this.downloadItemsConnection = ui;
-            this.newDownloadItemConnection = ui;
-            this.uiContainer = ui.getContentPane();
+            this.downloadItemsConnection = downloadItemsConnection;
+            this.newDownloadItemConnection = newDownloadItemConnection;
             this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
         }
 
@@ -259,7 +257,7 @@ public class Toolbar extends JPanel {
                 }
             }
             if (event.getSource() == settingsButton) {
-                Setting setting = new Setting(uiContainer, downloadItemsConnection);
+                Setting setting = new Setting(downloadItemsConnection);
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.company.UI;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
-import com.company.BetweenClassesRelation.NewDownloadItemConnection;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.Body;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadQueue;
@@ -39,9 +39,9 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
          *adding components to UI -- first leftSideBar
          */
 
-        leftSideBar = new LeftSideBar(this);
-        toolbar = new Toolbar(this);
-        body = new Body(this);
+        leftSideBar = new LeftSideBar((DownloadItemsConnection) this, (NewDownloadItemConnection) this);
+        toolbar = new Toolbar((DownloadItemsConnection) this, (NewDownloadItemConnection) this);
+        body = new Body((DownloadItemsConnection) this);
 
         setLayout(UILayout);
         add(leftSideBar, BorderLayout.WEST);
@@ -161,9 +161,14 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     }
 
     @Override
+    public Container getUiContainer() {
+        return this.getContentPane();
+    }
+
+    @Override
     public void reloadBody() {
-        body.repaint();
         body.revalidate();
+        body.repaint();
     }
 
 }

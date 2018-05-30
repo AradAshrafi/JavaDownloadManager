@@ -1,7 +1,7 @@
 package com.company.UI.LeftSideBar;
 
-import com.company.BetweenClassesRelation.DownloadItemsConnection;
-import com.company.BetweenClassesRelation.NewDownloadItemConnection;
+import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
+import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Setting;
 import com.company.UI.UI;
@@ -37,7 +37,7 @@ public class LeftSideBar extends JPanel {
         }
     }
 
-    public LeftSideBar(UI ui) {
+    public LeftSideBar(DownloadItemsConnection downloadItemsConnection, NewDownloadItemConnection newDownloadItemConnection) {
         /**
          * create menu bar (Vertical Menubar)
          */
@@ -151,7 +151,6 @@ public class LeftSideBar extends JPanel {
         lookAndFeelManager.setBorder((new SoftBevelBorder(BevelBorder.RAISED)));
 
 
-
         /**
          * add menu bar to JPanel
          */
@@ -160,7 +159,7 @@ public class LeftSideBar extends JPanel {
         /**
          * handling actionListeners
          */
-        MenuItemHandler leftSideBarHandler = new MenuItemHandler(ui);
+        MenuItemHandler leftSideBarHandler = new MenuItemHandler(downloadItemsConnection, newDownloadItemConnection);
         processing.addActionListener(leftSideBarHandler);
         completed.addActionListener(leftSideBarHandler);
         queues.addActionListener(leftSideBarHandler);
@@ -179,21 +178,19 @@ public class LeftSideBar extends JPanel {
 
     private class MenuItemHandler implements ActionListener {
         private HashSet<DownloadItem> selectedItems;
-        private Container uiContainer;
         private DownloadItemsConnection downloadItemsConnection;
         private NewDownloadItemConnection newDownloadItemConnection;
 
 
-        public MenuItemHandler(UI ui) {
+        public MenuItemHandler(DownloadItemsConnection downloadItemsConnection, NewDownloadItemConnection newDownloadItemConnection) {
             /**
              * casting ui to interface to use it's functionality
              * cast it to NewDownloadItem to change body panel
              */
-            this.downloadItemsConnection = ui;
-            this.newDownloadItemConnection = ui;
+            this.downloadItemsConnection = downloadItemsConnection;
+            this.newDownloadItemConnection = newDownloadItemConnection;
 
             this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
-            this.uiContainer = ui.getContentPane();
 
         }
 
@@ -215,7 +212,7 @@ public class LeftSideBar extends JPanel {
                 NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection, downloadItemsConnection); //:))))
             }
             if (event.getSource() == lookAndFeelManager) {
-                LookAndFeelManager lookAndFeelManager = new LookAndFeelManager(uiContainer);
+                LookAndFeelManager lookAndFeelManager = new LookAndFeelManager(downloadItemsConnection.getUiContainer());
             }
             if (event.getSource() == pauseResume) {
                 Iterator<DownloadItem> it = selectedItems.iterator();
@@ -223,7 +220,7 @@ public class LeftSideBar extends JPanel {
                 while (it.hasNext()) {
                     selectedToPauseOrResume = it.next();
                     String status = selectedToPauseOrResume.getStatus();
-                    if (!status.equals("In Progress")
+                    if (status.equals("In Progress")
                             ) {
                         downloadItemsConnection.pauseSelectedItem(selectedToPauseOrResume);
                     } else if (status.equals("Paused")) {
@@ -249,7 +246,7 @@ public class LeftSideBar extends JPanel {
                 }
             }
             if (event.getSource() == settings) {
-                Setting setting = new Setting(uiContainer, downloadItemsConnection);
+                Setting setting = new Setting(downloadItemsConnection);
             }
             if (event.getSource() == exit) {
                 System.exit(0);

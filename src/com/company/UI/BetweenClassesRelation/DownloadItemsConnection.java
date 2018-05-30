@@ -1,13 +1,12 @@
-package com.company.BetweenClassesRelation;
+package com.company.UI.BetweenClassesRelation;
 
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadQueue;
 
-import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 public interface DownloadItemsConnection {
     //--->
@@ -41,6 +40,8 @@ public interface DownloadItemsConnection {
     void addToDownloadItems(DownloadItem downloadItem);
 
     void removeFromDownloadItems(DownloadItem downloadItem);
+
+    Container getUiContainer();
 
     void reloadBody();
 

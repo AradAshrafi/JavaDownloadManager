@@ -1,4 +1,4 @@
-package com.company.BetweenClassesRelation;
+package com.company.UI.BetweenClassesRelation;
 
 import com.company.UI.Body.DownloadItem;
 
