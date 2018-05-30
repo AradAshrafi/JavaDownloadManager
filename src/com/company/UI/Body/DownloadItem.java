@@ -1,5 +1,6 @@
 package com.company.UI.Body;
 
+import com.company.DownloadItemData.DownloadItemData;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 
 import javax.swing.*;
@@ -43,7 +44,7 @@ public class DownloadItem extends JPanel {
     public DownloadItem() {
     }
 
-    public DownloadItem(String title, String status, String url, int percentage, int size, int downloadSpeed, String locationOfStorage, DownloadItemsConnection downloadItemsConnection) {
+    public DownloadItem(DownloadItemData downloadItemData, int downloadSpeed, DownloadItemsConnection downloadItemsConnection) {
         UIManager.put("ProgressBar.background", Color.WHITE);
         UIManager.put("ProgressBar.foreground", Color.decode("#78D6AC"));
         UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
@@ -52,14 +53,15 @@ public class DownloadItem extends JPanel {
         /**
          * read saved data from storage
          */
-        this.title = title;
-        this.status = status;
-        this.url = url;
-        this.size = size;
+        this.title = downloadItemData.getData().get("title");
+        this.status = downloadItemData.getData().get("status");
+        this.url = downloadItemData.getData().get("url");
+        this.locationOfStorage = downloadItemData.getData().get("locationOfStorage");
+        this.date = Long.parseLong(downloadItemData.getData().get("date"));
+        this.size = Integer.parseInt(downloadItemData.getData().get("size"));
+        this.percentage = Integer.parseInt(downloadItemData.getData().get("percentage"));
+
         this.downloadSpeed = downloadSpeed;
-        this.percentage = percentage;
-        this.date = System.currentTimeMillis();
-        this.locationOfStorage = locationOfStorage;
 
 
         /**
