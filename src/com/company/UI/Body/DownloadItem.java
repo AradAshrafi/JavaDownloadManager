@@ -30,6 +30,11 @@ public class DownloadItem extends JPanel {
     private String locationOfStorage;
     private String url;
 
+    /**
+     * separately take downloadItemData too :D
+     * i've decided to do this to be compatible with phase1 design in some parts instead of change those parts
+     */
+    private DownloadItemData downloadItemData;
 
     /**
      * GUI representation of data fields
@@ -41,7 +46,8 @@ public class DownloadItem extends JPanel {
     private JProgressBar downloadItemProgressbar;
     private JTextArea sizeArea, downloadedSizeArea, downloadSpeedArea;
 
-    public DownloadItem() {
+    public DownloadItemData getDownloadItemData() {
+        return downloadItemData;
     }
 
     public DownloadItem(DownloadItemData downloadItemData, int downloadSpeed, DownloadItemsConnection downloadItemsConnection) {
@@ -50,6 +56,12 @@ public class DownloadItem extends JPanel {
         UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
         UIManager.put("ProgressBar.selectionForeground", Color.orange);//:-?
         setBackground(Color.white);
+
+        /**
+         * update downloadItemData
+         */
+        this.downloadItemData = downloadItemData;
+
         /**
          * read saved data from storage
          */
@@ -67,7 +79,6 @@ public class DownloadItem extends JPanel {
         /**
          * make GUI components
          */
-//        openFolderButton = new JButton(); //its useless due to new another JButton down here
         downloadItemLayout = new SpringLayout();
         downloadItemTitleLabel = new JLabel();
         downloadItemProgressbar = new JProgressBar();
@@ -147,6 +158,7 @@ public class DownloadItem extends JPanel {
          *
          */
         setLayout(downloadItemLayout);
+
         /**
          * set download item's preferredSize
          */

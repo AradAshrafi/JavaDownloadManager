@@ -84,7 +84,10 @@ public class AddRemoveFromQueue extends JFrame {
                         String selectedQueue = queueName.getText();
                         if (downloadQueues.keySet().contains(selectedQueue)) {
                             if (!downloadQueues.get(selectedQueue).getQueue().contains(selectedItem)) {
-                                downloadQueues.get(selectedQueue).getQueue().add(selectedItem);
+//                                downloadQueues.get(selectedQueue).getQueue().add(selectedItem);
+//                                downloadQueues.get("main")
+                                downloadQueues.get(selectedQueue).operationOnDownloadQueue(selectedItem, "add");
+
                                 dispose();
 
                             }
@@ -102,7 +105,8 @@ public class AddRemoveFromQueue extends JFrame {
                             dispose();
 
                         } else if (downloadQueues.get(selectedQueue).getQueue().contains(selectedItem)) {
-                            downloadQueues.get(selectedQueue).getQueue().remove(selectedItem);
+//                            downloadQueues.get(selectedQueue).getQueue().remove(selectedItem);
+                            downloadQueues.get(selectedQueue).operationOnDownloadQueue(selectedItem, "remove");
                             dispose();
                         } else {
                             dispose();

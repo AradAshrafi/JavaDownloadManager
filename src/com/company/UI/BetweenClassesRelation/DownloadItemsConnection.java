@@ -2,6 +2,7 @@ package com.company.UI.BetweenClassesRelation;
 
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadQueue;
+import com.company.UI.Body.DownloadsPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,6 +30,10 @@ public interface DownloadItemsConnection {
 
     void addNewQueue(String Key, DownloadItem downloadItem);
 
+    void addToCurrentQueue(String Key, DownloadItem downloadItem);
+
+    void removeFromCurrentQueue(String key, DownloadItem downloadItem);
+
     //<--
 
     int getSimultaneousDownloads();
@@ -37,9 +42,7 @@ public interface DownloadItemsConnection {
 
     ArrayList<DownloadItem> getDownloadItems();
 
-    void addToDownloadItems(DownloadItem downloadItem);
-
-    void removeFromDownloadItems(DownloadItem downloadItem);
+    DownloadsPanel getDownloadsPanel();
 
     Container getUiContainer();
 

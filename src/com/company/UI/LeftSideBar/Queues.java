@@ -18,10 +18,7 @@ public class Queues extends JFrame {
         queuesPanelLayout = new GridLayout(0, 1);
         setLayout(queuesPanelLayout);
         this.downloadQueues = downloadItemsConnection.getDownloadQueues();
-//        for (Map.Entry<String, DownloadQueue> entry : downloadQueues.entrySet()) {
-//            String key = entry.getKey();
-//            Object value = entry.getValue();
-//        }
+
         for (Map.Entry<String, DownloadQueue> downloadQueueEntry : downloadQueues.entrySet()) {
             String key = downloadQueueEntry.getKey();
             DownloadQueue value = downloadQueueEntry.getValue();
@@ -45,9 +42,7 @@ public class Queues extends JFrame {
              * building queue's item
              */
             JPanel queuesItem = new JPanel(new GridLayout(0, 1));
-            System.out.println("before : " + value.getQueue().size());
             for (DownloadItem downloadItem : value.getQueue()) {
-                System.out.println("test");
                 queuesItem.add(downloadItem);
             }
             currentQueue.add(queuesItem, BorderLayout.SOUTH);

@@ -20,22 +20,23 @@ public class ProcessingOrCompleteFrame extends JFrame {
         this.state = state;
         processingOrCompleteFrame = new GridLayout(0, 1);
         setLayout(processingOrCompleteFrame);
+        System.out.println(downloadItems.size());
 
-
+        ArrayList<DownloadItem> downloadItemsClone = (ArrayList<DownloadItem>) downloadItems.clone();
+        Iterator<DownloadItem> it = downloadItemsClone.iterator();
         if (state.equals("processing")) {
-            Iterator<DownloadItem> it = downloadItems.iterator();
             while (it.hasNext()) {
                 DownloadItem currentItem = it.next();
                 if (currentItem.getPercentage() < 100 && !currentItem.getStatus().equals("failed")) {
-                    add(currentItem);
+                    this.add(currentItem);
                 }
             }
         } else {
-            Iterator<DownloadItem> it = downloadItems.iterator();
+
             while (it.hasNext()) {
                 DownloadItem currentItem = it.next();
                 if (currentItem.getPercentage() == 100 || currentItem.getStatus().equals("failed")) {
-                    add(currentItem);
+                    this.add(currentItem);
                 }
             }
         }

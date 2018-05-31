@@ -4,7 +4,7 @@ import com.company.BetweenClassesRelation.StaticData;
 import com.company.DownloadItemData.CurrentDate;
 import com.company.DownloadItemData.DownloadItemData;
 import com.company.FileOperation.Id;
-import com.company.FileOperation.ListJDM;
+import com.company.FileOperation.ListQueueJDM;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.DownloadItem;
@@ -140,7 +140,7 @@ public class NewDownloadTab extends JFrame {
                 //making new downloadItem data after getting them from user and make a new download item in panel
                 DownloadItemData newDownloadItemData = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, 0, CurrentDate.getCurrentDateWithDefaultFormat());
                 //write download data to ListJDM file
-                ListJDM.newDownload(newDownloadItemData);
+                ListQueueJDM.newDownload(newDownloadItemData, "list");
                 DownloadItem newDownloadItem = new DownloadItem(newDownloadItemData, 0, downloadItemsConnection);
                 //incrementing the unique id :D
                 Id.increment();

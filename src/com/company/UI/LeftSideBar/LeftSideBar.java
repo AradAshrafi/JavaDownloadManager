@@ -189,7 +189,6 @@ public class LeftSideBar extends JPanel {
              */
             this.downloadItemsConnection = downloadItemsConnection;
             this.newDownloadItemConnection = newDownloadItemConnection;
-
             this.selectedItems = downloadItemsConnection.getSelectedItems();//data has a static field for HashSets
 
         }
@@ -198,21 +197,34 @@ public class LeftSideBar extends JPanel {
         public void actionPerformed(ActionEvent event) {
             if (event.getSource() == processing) {
                 System.out.println("processing");
-                ProcessingOrCompleteFrame processingOrCompleteFrame = new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "processing");
+                new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "processing");
+//                System.out.println(downloadItemsConnection.getDownloadsPanel().getMainQueue().getQueue().size());
+//                downloadItemsConnection.getDownloadsPanel().revalidate();
+//                downloadItemsConnection.getDownloadsPanel().repaint();
+
             }
             if (event.getSource() == completed) {
                 System.out.println("completed");
-                ProcessingOrCompleteFrame processingOrCompleteFrame = new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "completed");
+                new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "completed");
+                System.out.println(downloadItemsConnection.getDownloadsPanel().getMainQueue().getQueue().size());
 
+//                downloadItemsConnection.reloadBody();
+//                downloadItemsConnection.getDownloadsPanel().revalidate();
+//                downloadItemsConnection.getDownloadsPanel().repaint();
             }
             if (event.getSource() == queues) {
-                Queues queues = new Queues(downloadItemsConnection);
+                new Queues(downloadItemsConnection);
+                System.out.println(downloadItemsConnection.getDownloadsPanel().getMainQueue().getQueue().size());
+
+//                downloadItemsConnection.getDownloadsPanel().revalidate();
+//                downloadItemsConnection.getDownloadsPanel().repaint();
+//                downloadItemsConnection.reloadBody();
             }
             if (event.getSource() == newDownload) {
-                NewDownloadTab newDownloadTab = new NewDownloadTab(newDownloadItemConnection, downloadItemsConnection); //:))))
+                new NewDownloadTab(newDownloadItemConnection, downloadItemsConnection); //:))))
             }
             if (event.getSource() == lookAndFeelManager) {
-                LookAndFeelManager lookAndFeelManager = new LookAndFeelManager(downloadItemsConnection.getUiContainer());
+                new LookAndFeelManager(downloadItemsConnection.getUiContainer());
             }
             if (event.getSource() == pauseResume) {
                 Iterator<DownloadItem> it = selectedItems.iterator();
