@@ -34,6 +34,7 @@ public class Setting extends JFrame {
     public Setting(DownloadItemsConnection downloadItemsConnection) {
         this.uiContainer = downloadItemsConnection.getUiContainer();
         this.simultaneousDownloadsValue = downloadItemsConnection.getSimultaneousDownloads();
+        System.out.println(simultaneousDownloadsValue);
         /**
          * handling Layout
          */
@@ -48,7 +49,7 @@ public class Setting extends JFrame {
          */
         simultaneousDownloadsLabel = new JLabel();
         simultaneousDownloadsLabel.setText("Simultaneous Downloads : ");
-        simultaneousDownloads = new JSlider(JSlider.HORIZONTAL, 0, 50, 50);
+        simultaneousDownloads = new JSlider(JSlider.HORIZONTAL, 0, 50, simultaneousDownloadsValue);
         simultaneousDownloads.setForeground(Color.BLUE);
         simultaneousDownloads.setMajorTickSpacing(5);
         simultaneousDownloads.setPaintTicks(true);

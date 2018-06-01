@@ -1,4 +1,4 @@
-package com.company.BetweenClassesRelation;
+package com.company.UI.BetweenClassesRelation;
 
 public class StaticData {
     private static StaticData ourInstance = new StaticData();

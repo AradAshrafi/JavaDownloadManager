@@ -10,7 +10,6 @@ public class FilterJDM {
 
     public static ArrayList<String> getForbiddenURLs() {
         ArrayList<String> savedForbiddenURLs = new ArrayList<>();
-        String lastCaughtItem = "";
         File file = new File(path);
         try {
             FileReader fr = new FileReader(file);

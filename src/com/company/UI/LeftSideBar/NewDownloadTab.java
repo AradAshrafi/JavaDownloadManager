@@ -1,6 +1,6 @@
 package com.company.UI.LeftSideBar;
 
-import com.company.BetweenClassesRelation.StaticData;
+import com.company.UI.BetweenClassesRelation.StaticData;
 import com.company.DownloadItemData.CurrentDate;
 import com.company.DownloadItemData.DownloadItemData;
 import com.company.FileOperation.Id;

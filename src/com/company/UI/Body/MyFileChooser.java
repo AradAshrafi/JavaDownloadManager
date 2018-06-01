@@ -1,6 +1,6 @@
 package com.company.UI.Body;
 
-import com.company.BetweenClassesRelation.StaticData;
+import com.company.UI.BetweenClassesRelation.StaticData;
 
 import javax.swing.*;
 import java.awt.*;
