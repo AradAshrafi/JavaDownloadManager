@@ -1,5 +1,7 @@
 package com.company.UI.LeftSideBar;
 
+import com.company.FileOperation.Export;
+import com.company.FileOperation.ThingsToSaveBeforeClosingTheProgram;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.DownloadItem;
@@ -20,7 +22,7 @@ import java.util.Queue;
 public class LeftSideBar extends JPanel {
     private JMenuBar leftSideBarMenu;
     private JMenu download, help;
-    private JMenuItem processing, completed, queues, newDownload, pauseResume, cancel, remove, settings, exit, about;
+    private JMenuItem processing, completed, queues, newDownload, pauseResume, cancel, remove, settings, exportToZip, exit, about;
     private JLabel horizontalSeparator;
     private JButton lookAndFeelManager;
 
@@ -63,11 +65,11 @@ public class LeftSideBar extends JPanel {
         completed = new JMenuItem("Completed");
         queues = new JMenuItem("Queues");
         newDownload = new JMenuItem("Add a download");
-
         pauseResume = new JMenuItem("Pause/Resume selected download");
         cancel = new JMenuItem("Cancel selected download");
         remove = new JMenuItem("Remove selected download");
         settings = new JMenuItem("Settings");
+        exportToZip = new JMenuItem("zip necessary cache to cache.zip");
         exit = new JMenuItem("Exit");
         about = new JMenuItem("About");
 
@@ -127,6 +129,7 @@ public class LeftSideBar extends JPanel {
         download.add(pauseResume);
         download.add(cancel);
         download.add(remove);
+        download.add(exportToZip);
         download.add(settings);
         download.add(exit);
 
@@ -168,6 +171,7 @@ public class LeftSideBar extends JPanel {
         cancel.addActionListener(leftSideBarHandler);
         remove.addActionListener(leftSideBarHandler);
         settings.addActionListener(leftSideBarHandler);
+        exportToZip.addActionListener(leftSideBarHandler);
         exit.addActionListener(leftSideBarHandler);
         lookAndFeelManager.addActionListener(leftSideBarHandler);
         about.addActionListener(leftSideBarHandler);
@@ -260,7 +264,12 @@ public class LeftSideBar extends JPanel {
             if (event.getSource() == settings) {
                 Setting setting = new Setting(downloadItemsConnection);
             }
+
+            if (event.getSource() == exportToZip) {
+                Export.ExportToZip();
+            }
             if (event.getSource() == exit) {
+                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(downloadItemsConnection.getSimultaneousDownloads());
                 System.exit(0);
             }
             if (event.getSource() == about) {

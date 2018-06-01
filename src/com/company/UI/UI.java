@@ -1,7 +1,9 @@
 package com.company.UI;
 
+import com.company.FileOperation.Export;
 import com.company.FileOperation.ListQueueJDM;
 import com.company.FileOperation.SettingsJDM;
+import com.company.FileOperation.ThingsToSaveBeforeClosingTheProgram;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.BetweenClassesRelation.StaticData;
@@ -40,7 +42,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
 
         if (SettingsJDM.getSettings().size() > 0)
             simultaneousDownloads = Integer.parseInt(SettingsJDM.getSettings().get(0));
-        else simultaneousDownloads = 1000;
+        else simultaneousDownloads = 50;
 
 //        setSize(600, 600);
 
@@ -62,10 +64,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         setVisible(true);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                ArrayList<String> settings = new ArrayList<String>();
-                settings.add("Location : " + StaticData.getLocation());
-                settings.add("SimultaneousDownloads : " + Integer.toString(simultaneousDownloads));
-                SettingsJDM.saveSettings(settings);
+                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(simultaneousDownloads);
             }
         });
 

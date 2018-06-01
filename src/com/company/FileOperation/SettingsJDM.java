@@ -23,7 +23,6 @@ public class SettingsJDM {
                     com.company.UI.BetweenClassesRelation.StaticData.SetLocation(currentLineStringArray[2]);
 
                 } else if (currentLineStringArray[0].equals("SimultaneousDownloads")) {
-                    System.out.println("zhuuuuun");
                     savedSettings.add(currentLineStringArray[2]);
 
                 }

@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class RemovedJDM {
-    private static final String path = "C:\\Users\\asus\\Desktop\\WORKS\\java\\Projects\\Download Manager\\src\\com\\company\\FileOperation\\Removed.jdm";
+    private static final String path = "C:\\Users\\asus\\Desktop\\WORKS\\java\\Projects\\Download Manager\\src\\com\\company\\FileOperation\\removed.jdm";
 
     public static void addToRecycleBin(String removedLine) {
         File file = new File(path);
