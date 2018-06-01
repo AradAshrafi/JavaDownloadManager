@@ -27,7 +27,8 @@ public class DownloadItemMouseHandler implements MouseListener {
             if (Desktop.isDesktopSupported()) {
                 try {
                     DownloadItem downloadItem = (DownloadItem) (e.getSource());
-                    File myFile = new File(downloadItem.getLocationOfStorage() + downloadItem.getTitle());
+                    System.out.println(" " + downloadItem.getLocationOfStorage());
+                    File myFile = new File(downloadItem.getLocationOfStorage() + '\\' + downloadItem.getTitle());
                     Desktop.getDesktop().open(myFile);
                 } catch (IOException ex) {
                     System.out.println("invalid path");

@@ -1,6 +1,7 @@
 package com.company.UI.Body;
 
 import com.company.DownloadItemData.DownloadItemData;
+import com.company.NetworkOperation.DownloadFromANewURL;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class DownloadItem extends JPanel {
     /**
@@ -23,6 +25,7 @@ public class DownloadItem extends JPanel {
     private int size;
     private int downloadSpeed;
     private SpringLayout downloadItemLayout;
+
     /**
      * secret data that will show in downloadItemDetail after right click on each item
      */
@@ -46,9 +49,6 @@ public class DownloadItem extends JPanel {
     private JProgressBar downloadItemProgressbar;
     private JTextArea sizeArea, downloadedSizeArea, downloadSpeedArea;
 
-    public DownloadItemData getDownloadItemData() {
-        return downloadItemData;
-    }
 
     public DownloadItem(DownloadItemData downloadItemData, int downloadSpeed, DownloadItemsConnection downloadItemsConnection) {
         UIManager.put("ProgressBar.background", Color.WHITE);
@@ -163,14 +163,17 @@ public class DownloadItem extends JPanel {
          * set download item's preferredSize
          */
         setPreferredSize(new Dimension(1050, 150));
-        add(sizeArea);
-        add(openFolderButton);
-        add(addToQueue);
-        add(removeFromQueue);
-        add(downloadedSizeArea);
-        add(downloadSpeedArea);
+
         add(downloadItemTitleLabel);
-        add(downloadItemProgressbar);
+        add(downloadedSizeArea);
+        if (!status.equals("done")) {
+            add(sizeArea);
+            add(openFolderButton);
+            add(addToQueue);
+            add(removeFromQueue);
+            add(downloadSpeedArea);
+            add(downloadItemProgressbar);
+        }
 
         /**
          * place them using SpringLayout
@@ -211,6 +214,13 @@ public class DownloadItem extends JPanel {
         openFolderButton.addActionListener(downloadItemButtonListener);
         addToQueue.addActionListener(downloadItemButtonListener);
         removeFromQueue.addActionListener(downloadItemButtonListener);
+
+        if (status.equals("In Progress")) {
+            DownloadFromANewURL downloadFromANewURL = new DownloadFromANewURL(this);
+            downloadFromANewURL.execute();
+            size = downloadFromANewURL.getSize();
+
+        }
 
         setVisible(true);
     }
@@ -299,10 +309,28 @@ public class DownloadItem extends JPanel {
     }
 
     public String getLocationOfStorage() {
+        System.out.println(locationOfStorage);
         return locationOfStorage;
     }
 
     public String getUrl() {
         return url;
+    }
+
+    public JProgressBar getDownloadItemProgressbar() {
+        return downloadItemProgressbar;
+    }
+
+    public DownloadItemData getDownloadItemData() {
+        return downloadItemData;
+    }
+
+    public void removeFiledsAfterFinishingDownload() {
+        remove(sizeArea);
+        remove(openFolderButton);
+        remove(addToQueue);
+        remove(removeFromQueue);
+        remove(downloadSpeedArea);
+        remove(downloadItemProgressbar);
     }
 }

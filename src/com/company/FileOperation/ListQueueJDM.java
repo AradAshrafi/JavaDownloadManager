@@ -5,9 +5,11 @@ import com.company.UI.Body.DownloadItem;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ListQueueJDM {
     private static final String listPath = "C:\\Users\\asus\\Desktop\\WORKS\\java\\Projects\\Download Manager\\src\\com\\company\\FileOperation\\list.jdm";
+    private static final String listPathTemp = "C:\\Users\\asus\\Desktop\\WORKS\\java\\Projects\\Download Manager\\src\\com\\company\\FileOperation\\list.tmp.jdm";
     private static final String queuePath = "C:\\Users\\asus\\Desktop\\WORKS\\java\\Projects\\Download Manager\\src\\com\\company\\FileOperation\\queue.jdm";
 
     /**
@@ -60,10 +62,13 @@ public class ListQueueJDM {
     /**
      * @param downloadItemData -- an object containing all data about one download
      */
-    public static void newDownload(DownloadItemData downloadItemData, String listOrQueue) {
+    public static void newDownload(DownloadItemData downloadItemData, String listOrQueue, boolean newDownloadOrSaveDownloadsBeforeCLose) {
         String path;
         if (listOrQueue.equals("list")) {
-            path = listPath;
+            if (newDownloadOrSaveDownloadsBeforeCLose)
+                path = listPath;
+            else
+                path = listPathTemp;
         } else {
             path = queuePath;
         }
@@ -76,7 +81,7 @@ public class ListQueueJDM {
                     "title : " + downloadItemData.getData().get("title"),
                     "url : " + downloadItemData.getData().get("url"),
                     "status : " + downloadItemData.getData().get("status"),
-                    "location : " + downloadItemData.getData().get("locationOfStorage"),
+                    "locationOfStorage : " + downloadItemData.getData().get("locationOfStorage"),
                     "size : " + downloadItemData.getData().get("size"),
                     "percentage : " + downloadItemData.getData().get("percentage"),
                     "date : " + downloadItemData.getData().get("date")
@@ -121,6 +126,7 @@ public class ListQueueJDM {
                     if (currentLineArray[0].equals("id")) {
                         if (currentLineArray[2].equals(keyToFind)) {
                             findIt = true;
+                            RemovedJDM.addToRecycleBin(currentLine);
                             continue;
                         }
                     }
@@ -137,13 +143,13 @@ public class ListQueueJDM {
                     }
                 }
             }
-
+            RemovedJDM.addToRecycleBin(" ");
             bufferedReader.close();
             bufferedWriter.flush();
             bufferedWriter.close();
             if (file.delete()) {
                 if (tempFile.renameTo(file)) {
-                    System.out.println("renamed:D");
+                    //nothing :D
                 } else {
                     System.out.println("cant rename");
                 }
@@ -161,7 +167,17 @@ public class ListQueueJDM {
     }
 
     //TODO: combine saveFilesSituationBeforeClosing and Remove Download
-    public static void saveFilesSituationBeforeClosing() {
-
+    public static void saveDownloadItemsSituationBeforeClosing(ArrayList<DownloadItem> downloadItems) {
+        for (DownloadItem downloadItem : downloadItems) {
+            newDownload(downloadItem.getDownloadItemData(), "list", false);//false determines to save files in temp
+        }
+        File file = new File(listPath);
+        File tmpFile = new File(listPathTemp);
+        if (file.delete()) {
+            tmpFile.renameTo(file);
+            System.out.println("renamed");
+        } else {
+            System.out.println("cant delete");
+        }
     }
 }

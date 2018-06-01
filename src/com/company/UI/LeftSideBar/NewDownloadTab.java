@@ -51,7 +51,7 @@ public class NewDownloadTab extends JFrame {
          * components configuration
          */
         url.setText("URL : ");
-        nameLabel.setText("Name : ");
+        nameLabel.setText("Name (optional) : ");
         submit.setPreferredSize(new Dimension(130, 20));
 
         /**
@@ -83,6 +83,7 @@ public class NewDownloadTab extends JFrame {
         newDownloadTabLayout.putConstraint(SpringLayout.WEST, name, 10, SpringLayout.EAST, nameLabel);
         newDownloadTabLayout.putConstraint(SpringLayout.EAST, name, 10, SpringLayout.EAST, this);
         newDownloadTabLayout.putConstraint(SpringLayout.NORTH, name, 10, SpringLayout.SOUTH, link);
+
 
         /**
          * handling ActionListeners
@@ -137,10 +138,15 @@ public class NewDownloadTab extends JFrame {
             if (event.getSource() == submit) {
                 String downloadLink = link.getText();
                 String downloadName = name.getText();
+                if (downloadName.length() == 0 || downloadName.trim().length() == 0) {
+                    downloadName = downloadLink.trim().substring(downloadLink.lastIndexOf('/') + 1);
+                } else {
+                    downloadName += downloadLink.trim().substring(downloadLink.lastIndexOf('.'));//concat '.' character too
+                }
                 //making new downloadItem data after getting them from user and make a new download item in panel
                 DownloadItemData newDownloadItemData = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, 0, CurrentDate.getCurrentDateWithDefaultFormat());
                 //write download data to ListJDM file
-                ListQueueJDM.newDownload(newDownloadItemData, "list");
+                ListQueueJDM.newDownload(newDownloadItemData, "list", true);
                 DownloadItem newDownloadItem = new DownloadItem(newDownloadItemData, 0, downloadItemsConnection);
                 //incrementing the unique id :D
                 Id.increment();

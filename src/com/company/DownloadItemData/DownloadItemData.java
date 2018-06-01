@@ -31,4 +31,10 @@ public class DownloadItemData {
 
         return data;
     }
+
+    public void setStatus(String status) {
+        System.out.println(data.get("status"));
+        data.put("status", status);
+        System.out.println(data.get("status"));
+    }
 }

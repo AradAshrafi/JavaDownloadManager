@@ -269,7 +269,7 @@ public class LeftSideBar extends JPanel {
                 Export.ExportToZip();
             }
             if (event.getSource() == exit) {
-                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(downloadItemsConnection.getSimultaneousDownloads());
+                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(downloadItemsConnection.getSimultaneousDownloads(), downloadItemsConnection.getDownloadQueues().get("main").getQueue());
                 System.exit(0);
             }
             if (event.getSource() == about) {

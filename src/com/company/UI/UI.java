@@ -64,7 +64,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         setVisible(true);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(simultaneousDownloads);
+                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(simultaneousDownloads,downloadQueues.get("main").getQueue());
             }
         });
 
