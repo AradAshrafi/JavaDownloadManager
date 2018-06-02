@@ -19,9 +19,8 @@ public class Queues extends JFrame {
         setLayout(queuesPanelLayout);
         this.downloadQueues = downloadItemsConnection.getDownloadQueues();
 
-        for (Map.Entry<String, DownloadQueue> downloadQueueEntry : downloadQueues.entrySet()) {
-            String key = downloadQueueEntry.getKey();
-            DownloadQueue value = downloadQueueEntry.getValue();
+        for (String key : downloadQueues.keySet()) {
+            DownloadQueue value = downloadQueues.get(key);
             /**
              * building queue's title
              */
@@ -32,6 +31,7 @@ public class Queues extends JFrame {
             JPanel currentRowOperation = new JPanel(new GridLayout(0, 2));
             currentRowOperation.add(new JButton("Play"));
             currentRowOperation.add(new JButton("Pause"));
+
             /**
              * queue's title added
              */

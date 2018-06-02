@@ -5,55 +5,47 @@ import com.company.UI.Body.DownloadItem;
 import javax.swing.*;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
     private DownloadItem downloadItem;
-    private String URL;
-    private int downloadedSize;
+    private String url;
+    private String fileName;
+    private String locationOfStorage;
+    private int downloadedSize = 0;
 
     public DownloadFromANewURL(DownloadItem downloadItem) {
         this.downloadItem = downloadItem;
         this.downloadedSize = downloadItem.getDownloadedSize();
-        this.URL = downloadItem.getUrl();
+        this.fileName = downloadItem.getTitle();
+        this.url = downloadItem.getUrl();
+        this.locationOfStorage = downloadItem.getLocationOfStorage();
     }
 
     public void sendGETRequest() {
         try {
-            URL obj = new URL(URL); //it has malformedException
+            URL obj = new URL(url); //it has malformedException
             HttpURLConnection HttpCon = (HttpURLConnection) obj.openConnection();
             HttpCon.setRequestMethod("GET");
-
-            String fileName = downloadItem.getTitle();
-//            con.setRequestProperty("User-Agent", USER_AGENT);
-            int responseCode = HttpCon.getResponseCode();
             int downloadItemSize = HttpCon.getContentLength();
             downloadItem.getDownloadItemProgressbar().setValue(downloadedSize);
             downloadItem.getDownloadItemData().setSize(Integer.toString(downloadItemSize));
             downloadItem.setsize(downloadItemSize);
-            System.out.println("GET Response Code : " + responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) { // success
-                InputStream inputStream = HttpCon.getInputStream();
-                System.out.println(downloadItem.getLocationOfStorage() + fileName);
-                OutputStream outputStream = new FileOutputStream(new File(downloadItem.getLocationOfStorage() + '\\' + fileName));
-                int bytesRead;
-                byte[] buffer = new byte[1024];
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                    downloadedSize += bytesRead;
-                    publish(downloadedSize);
-//                    System.out.println(size);
-                }
-                inputStream.close();
-                outputStream.flush();
-                outputStream.close();
-//                FileUtils.writeByteArrayToFile(new File("pathname"), myByteArray)
-            } else {
-                System.out.println("GET request not worked (check URL )");
+            /// /i have 3 parts for each download so i divide it to 3
+            int eachPartSize = downloadItemSize / 3;
+            ArrayList<Thread> threads = new ArrayList<>();
+            for (int i = 1; i <= 3; i++) {
+                Thread thread = new DownloadPartialParts(fileName, url, locationOfStorage, downloadedSize, (i - 1) * eachPartSize, i * eachPartSize);
+                threads.add(thread);
+                thread.start();
             }
-            HttpCon.disconnect();
+            for (Thread thread : threads) {
+                thread.join();
+            }
+            concatSegments(eachPartSize);
 
         } catch (IOException e) {
             downloadItem.removeFieldsAfterFinishingDownload();
@@ -62,12 +54,40 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
             downloadItem.getDownloadItemData().setDownloadedSize(Integer.toString(downloadedSize));
             downloadItem.setDownloadedSize(downloadedSize);
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+    }
+
+    private void concatSegments(int eachPartSize) {
+        String path = locationOfStorage + '\\' + fileName;
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+            for (int j = 0; j < 3; j++) {
+                File partOfDownload = new File(path + '.' + j * eachPartSize);
+                FileInputStream fileInputStream = new FileInputStream(partOfDownload);
+                int bytesRead;
+                byte[] buffer = new byte[1024];
+                while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, bytesRead);
+                }
+                fileInputStream.close();
+                partOfDownload.delete();
+            }
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     protected Integer doInBackground() {
         sendGETRequest();
+
         return 0;
     }
 
@@ -84,6 +104,7 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
 
     @Override
     protected void done() {
+//        Thread.currentThread().join();
         if (downloadItem.getStatus().equals("In Progress")) {
             downloadItem.removeFieldsAfterFinishingDownload();
             downloadItem.getDownloadItemData().setStatus("done");

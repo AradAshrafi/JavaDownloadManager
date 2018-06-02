@@ -88,3 +88,50 @@ size : 102180
 percentage : 0
 date : 2018/06/02 07:58:40
  
+id : 32
+title : Sample-text-file-500kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-500kb.txt
+status : paused
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 511274
+downloadedSize : 511274
+date : 2018/06/02 08:21:12
+id : 32
+ 
+ 
+id : 36
+title : Sample-text-file-200kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-200kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 204118
+downloadedSize : 0
+date : 2018/06/02 12:37:06
+ 
+id : 35
+title : Sample-text-file-200kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-200kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 204118
+downloadedSize : 0
+date : 2018/06/02 12:21:32
+ 
+id : 37
+title : Sample-text-file-200kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-200kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 204118
+downloadedSize : 0
+date : 2018/06/02 12:38:19
+ 
+id : 38
+title : Sample-text-file-200kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-200kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+date : 2018/06/02 13:36:15
+ 
