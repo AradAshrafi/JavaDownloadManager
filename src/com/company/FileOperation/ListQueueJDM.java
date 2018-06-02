@@ -83,7 +83,7 @@ public class ListQueueJDM {
                     "status : " + downloadItemData.getData().get("status"),
                     "locationOfStorage : " + downloadItemData.getData().get("locationOfStorage"),
                     "size : " + downloadItemData.getData().get("size"),
-                    "percentage : " + downloadItemData.getData().get("percentage"),
+                    "downloadedSize : " + downloadItemData.getData().get("downloadedSize"),
                     "date : " + downloadItemData.getData().get("date")
             };
             for (int i = 0; i < toWrite.length; i++) {

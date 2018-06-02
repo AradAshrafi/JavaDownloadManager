@@ -14,7 +14,7 @@ public class DownloadItemData {
         data.put("status", status);
         data.put("locationOfStorage", locationOfStorage);
         data.put("size", Integer.toString(size));
-        data.put("percentage", Integer.toString(percentage));
+        data.put("downloadedSize", Integer.toString(percentage));
         data.put("date", date);
     }
 
@@ -33,8 +33,14 @@ public class DownloadItemData {
     }
 
     public void setStatus(String status) {
-        System.out.println(data.get("status"));
         data.put("status", status);
-        System.out.println(data.get("status"));
+    }
+
+    public void setSize(String size) {
+        data.put("size", size);
+    }
+
+    public void setDownloadedSize(String downloadedSize) {
+        data.put("downloadedSize", downloadedSize);
     }
 }

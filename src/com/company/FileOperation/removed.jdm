@@ -1,0 +1,90 @@
+id : 19
+title : bla bla.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+percentage : 0
+date : 2018/06/01 22:22:24
+ 
+id : 20
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : failed
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+percentage : 0
+date : 2018/06/01 23:23:39
+ 
+id : 21
+title : aa.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : failed
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+percentage : 0
+date : 2018/06/01 23:26:12
+ 
+id : 24
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+percentage : 0
+date : 2018/06/01 23:35:28
+ 
+id : 25
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+percentage : 0
+date : 2018/06/01 23:36:11
+ 
+id : 23
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+percentage : 0
+date : 2018/06/01 23:33:53
+ 
+id : 22
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : failed
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+percentage : 0
+date : 2018/06/01 23:33:08
+ 
+id : 28
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+percentage : 0
+date : 2018/06/02 07:59:43
+ 
+id : 27
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+percentage : 0
+date : 2018/06/02 07:59:18
+ 
+id : 26
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+percentage : 0
+date : 2018/06/02 07:58:40
+ 

@@ -21,7 +21,9 @@ public class DownloadItem extends JPanel {
      */
     private String title;
     private String status;
-    private int percentage;
+    private int downloadedSize;
+
+
     private int size;
     private int downloadSpeed;
     private SpringLayout downloadItemLayout;
@@ -54,7 +56,7 @@ public class DownloadItem extends JPanel {
         UIManager.put("ProgressBar.background", Color.WHITE);
         UIManager.put("ProgressBar.foreground", Color.decode("#78D6AC"));
         UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
-        UIManager.put("ProgressBar.selectionForeground", Color.orange);//:-?
+        UIManager.put("ProgressBar.selectionForeground", Color.RED);//:-?
         setBackground(Color.white);
 
         /**
@@ -71,7 +73,7 @@ public class DownloadItem extends JPanel {
         this.locationOfStorage = downloadItemData.getData().get("locationOfStorage");
         this.date = downloadItemData.getData().get("date");
         this.size = Integer.parseInt(downloadItemData.getData().get("size"));
-        this.percentage = Integer.parseInt(downloadItemData.getData().get("percentage"));
+        this.downloadedSize = Integer.parseInt(downloadItemData.getData().get("downloadedSize"));
 
         this.downloadSpeed = downloadSpeed;
 
@@ -144,11 +146,16 @@ public class DownloadItem extends JPanel {
          */
         downloadItemTitleLabel.setText(title);
         downloadItemProgressbar.setStringPainted(true);
-        downloadItemProgressbar.setValue(percentage);
-        downloadItemProgressbar.setString("status : " + status + "                                                      " + percentage + "%");//:D
+        if (size == 0) {
+            downloadItemProgressbar.setValue(0);
+        } else {
+            downloadItemProgressbar.setValue(downloadedSize * 100 / size);
+
+        }
+        downloadItemProgressbar.setString("status : " + status + "                                                      " + (downloadItemProgressbar.getValue()) + "%");//:D
         sizeArea.setText(size + "Kb");
         sizeArea.setForeground(Color.black);
-        downloadedSizeArea.setText((size * percentage / 100) + "Kb");
+        downloadedSizeArea.setText(downloadedSize + "Kb");
         downloadedSizeArea.setForeground(Color.black);
         downloadSpeedArea.setText("1 Kb/s");
         downloadSpeedArea.setForeground(Color.black);
@@ -166,7 +173,7 @@ public class DownloadItem extends JPanel {
 
         add(downloadItemTitleLabel);
         add(downloadedSizeArea);
-        if (!status.equals("done")) {
+        if (!(status.equals("done") || status.equals("failed"))) {
             add(sizeArea);
             add(openFolderButton);
             add(addToQueue);
@@ -218,7 +225,6 @@ public class DownloadItem extends JPanel {
         if (status.equals("In Progress")) {
             DownloadFromANewURL downloadFromANewURL = new DownloadFromANewURL(this);
             downloadFromANewURL.execute();
-            size = downloadFromANewURL.getSize();
 
         }
 
@@ -265,7 +271,7 @@ public class DownloadItem extends JPanel {
 
     public void setStatus(String status) {
         this.status = status;
-        downloadItemProgressbar.setString("status : " + status + "                                                     " + percentage + "%");
+        downloadItemProgressbar.setString("status : " + status + "                                                     " + (downloadedSize / size) + "%");
     }
 
     /**
@@ -292,8 +298,12 @@ public class DownloadItem extends JPanel {
         return title;
     }
 
+    public int getDownloadedSize() {
+        return downloadedSize;
+    }
+
     public int getPercentage() {
-        return percentage;
+        return ((downloadedSize / size) * 100);
     }
 
     public int getSizeOfDownload() {
@@ -302,6 +312,14 @@ public class DownloadItem extends JPanel {
 
     public int getDownloadSpeed() {
         return downloadSpeed;
+    }
+
+    public void setsize(int size) {
+        this.size = size;
+    }
+
+    public void setDownloadedSize(int downloadedSize) {
+        this.downloadedSize = downloadedSize;
     }
 
     public String getDate() {
@@ -325,7 +343,7 @@ public class DownloadItem extends JPanel {
         return downloadItemData;
     }
 
-    public void removeFiledsAfterFinishingDownload() {
+    public void removeFieldsAfterFinishingDownload() {
         remove(sizeArea);
         remove(openFolderButton);
         remove(addToQueue);

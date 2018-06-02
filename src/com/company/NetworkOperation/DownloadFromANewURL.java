@@ -1,22 +1,21 @@
 package com.company.NetworkOperation;
 
-import com.company.UI.BetweenClassesRelation.StaticData;
 import com.company.UI.Body.DownloadItem;
 
 import javax.swing.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
     private DownloadItem downloadItem;
     private String URL;
-    private int size = 0;
+    private int downloadedSize;
 
     public DownloadFromANewURL(DownloadItem downloadItem) {
         this.downloadItem = downloadItem;
+        this.downloadedSize = downloadItem.getDownloadedSize();
         this.URL = downloadItem.getUrl();
     }
 
@@ -29,6 +28,10 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
             String fileName = downloadItem.getTitle();
 //            con.setRequestProperty("User-Agent", USER_AGENT);
             int responseCode = HttpCon.getResponseCode();
+            int downloadItemSize = HttpCon.getContentLength();
+            downloadItem.getDownloadItemProgressbar().setValue(downloadedSize);
+            downloadItem.getDownloadItemData().setSize(Integer.toString(downloadItemSize));
+            downloadItem.setsize(downloadItemSize);
             System.out.println("GET Response Code : " + responseCode);
 
             if (responseCode == HttpURLConnection.HTTP_OK) { // success
@@ -39,10 +42,8 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
                 byte[] buffer = new byte[1024];
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
-                    size += bytesRead;
-                    publish(size);
-                    System.out.println(size);
-                    downloadItem.getDownloadItemProgressbar().setValue(size);
+                    downloadedSize += bytesRead;
+                    publish(downloadedSize);
 //                    System.out.println(size);
                 }
                 inputStream.close();
@@ -55,6 +56,11 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
             HttpCon.disconnect();
 
         } catch (IOException e) {
+            downloadItem.removeFieldsAfterFinishingDownload();
+            downloadItem.getDownloadItemData().setStatus("failed");
+            downloadItem.setStatus("failed");
+            downloadItem.getDownloadItemData().setDownloadedSize(Integer.toString(downloadedSize));
+            downloadItem.setDownloadedSize(downloadedSize);
             e.printStackTrace();
         }
     }
@@ -66,17 +72,24 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
     }
 
     @Override
+    protected void process(List<Integer> chunks) {
+        super.process(chunks);
+        for (Integer chunk : chunks) {
+            downloadItem.getDownloadItemData().setDownloadedSize(Integer.toString(downloadedSize));
+            downloadItem.setDownloadedSize(downloadedSize);
+            downloadItem.revalidate();
+            downloadItem.repaint();
+        }
+    }
+
+    @Override
     protected void done() {
-        downloadItem.remove(downloadItem.getDownloadItemProgressbar());
-        downloadItem.getDownloadItemData().setStatus("done");
-        downloadItem.setStatus("done");
-        System.out.println(downloadItem.getStatus());
+        if (downloadItem.getStatus().equals("In Progress")) {
+            downloadItem.removeFieldsAfterFinishingDownload();
+            downloadItem.getDownloadItemData().setStatus("done");
+            downloadItem.setStatus("done");
+            System.out.println(downloadItem.getStatus());
+        }
         super.done();
     }
-
-    public int getSize() {
-        System.out.println("im there");
-        return size;
-    }
-
 }
