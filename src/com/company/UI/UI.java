@@ -64,7 +64,7 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
         setVisible(true);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(simultaneousDownloads,downloadQueues.get("main").getQueue());
+                ThingsToSaveBeforeClosingTheProgram.thingsToSaveBeforeClosingTheProgram(simultaneousDownloads, downloadQueues.get("main").getQueue());
             }
         });
 
@@ -125,6 +125,10 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     @Override
     public HashMap<String, DownloadQueue> getDownloadQueues() {
         return this.downloadQueues;
+    }
+
+    public HashMap<String, DownloadQueue> getDownloadQueuesClone() {
+        return (HashMap<String, DownloadQueue>) this.downloadQueues.clone();
     }
 
     @Override
@@ -189,9 +193,11 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
     }
 
     @Override
-    public void reloadBody() {
-        body.revalidate();
-        body.repaint();
+    public void reloadUI() {
+//        new Runnable(){
+//
+//        }
+        revalidate();
+        repaint();
     }
-
 }

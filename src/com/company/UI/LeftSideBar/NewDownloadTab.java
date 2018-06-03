@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class NewDownloadTab extends JFrame {
@@ -143,8 +144,11 @@ public class NewDownloadTab extends JFrame {
                 } else {
                     downloadName += downloadLink.trim().substring(downloadLink.lastIndexOf('.'));//concat '.' character too
                 }
+                //downloadedSizeParts Initialization
+                String[] downloadedSizeParts = {"0", "0", "0"};
+
                 //making new downloadItem data after getting them from user and make a new download item in panel
-                DownloadItemData newDownloadItemData = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, 0, CurrentDate.getCurrentDateWithDefaultFormat());
+                DownloadItemData newDownloadItemData = new DownloadItemData(Integer.toString(Id.read()), downloadName, downloadLink, "In Progress", StaticData.getLocation(), 0, downloadedSizeParts, 0, CurrentDate.getCurrentDateWithDefaultFormat());
                 //write download data to ListJDM file
                 ListQueueJDM.newDownload(newDownloadItemData, "list", true);
                 DownloadItem newDownloadItem = new DownloadItem(newDownloadItemData, 0, downloadItemsConnection);

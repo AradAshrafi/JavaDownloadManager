@@ -116,7 +116,7 @@ public class Toolbar extends JPanel {
         settingsButton = new JButton(settingsIcon);
         settingsButton.setBorder(null);
         Border borderOfSettingsButton = settingsButton.getBorder();
-        Border marginOfSettingsButton = new EmptyBorder(0, 400, 0, 0);
+        Border marginOfSettingsButton = new EmptyBorder(0, 730, 0, 0);
         settingsButton.setBorder(new CompoundBorder(borderOfSettingsButton, marginOfSettingsButton));
         settingsButton.setContentAreaFilled(false);
 

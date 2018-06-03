@@ -114,7 +114,7 @@ public class AddRemoveFromQueue extends JFrame {
                     }
                 }
             }
-            downloadItemsConnection.reloadBody();
+//            downloadItemsConnection.reloadUI();
         }
     }
 

@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class DownloadItem extends JPanel {
@@ -22,7 +23,7 @@ public class DownloadItem extends JPanel {
     private String title;
     private String status;
     private int downloadedSize;
-
+    private ArrayList<Integer> downloadedSizeParts;
 
     private int size;
     private int downloadSpeed;
@@ -65,6 +66,11 @@ public class DownloadItem extends JPanel {
         this.downloadItemData = downloadItemData;
 
         /**
+         * initialize downloadedSizeParts
+         */
+        downloadedSizeParts = new ArrayList<>();
+
+        /**
          * read saved data from storage
          */
         this.title = downloadItemData.getData().get("title");
@@ -74,6 +80,9 @@ public class DownloadItem extends JPanel {
         this.date = downloadItemData.getData().get("date");
         this.size = Integer.parseInt(downloadItemData.getData().get("size"));
         this.downloadedSize = Integer.parseInt(downloadItemData.getData().get("downloadedSize"));
+        this.downloadedSizeParts.add(Integer.parseInt(downloadItemData.getData().get("downloadedSizePart1")));
+        this.downloadedSizeParts.add(Integer.parseInt(downloadItemData.getData().get("downloadedSizePart2")));
+        this.downloadedSizeParts.add(Integer.parseInt(downloadItemData.getData().get("downloadedSizePart3")));
 
         this.downloadSpeed = downloadSpeed;
 
@@ -271,7 +280,11 @@ public class DownloadItem extends JPanel {
 
     public void setStatus(String status) {
         this.status = status;
-        downloadItemProgressbar.setString("status : " + status + "                                                     " + (downloadedSize / size) + "%");
+    }
+
+    public void updateProgressbar() {
+        downloadItemProgressbar.setValue(downloadedSize * 100 / size);
+        downloadItemProgressbar.setString("status : " + status + "                                                     " + downloadItemProgressbar.getValue() + "%");
     }
 
     /**
@@ -316,10 +329,20 @@ public class DownloadItem extends JPanel {
 
     public void setsize(int size) {
         this.size = size;
+        sizeArea.setText(size + "kb");
     }
 
     public void setDownloadedSize(int downloadedSize) {
         this.downloadedSize = downloadedSize;
+        downloadedSizeArea.setText(downloadedSize + "kb");
+    }
+
+    public void setDownloadedSizeParts(ArrayList<Integer> downloadedSizeParts) {
+        this.downloadedSizeParts = downloadedSizeParts;
+    }
+
+    public ArrayList<Integer> getDownloadedSizeParts() {
+        return downloadedSizeParts;
     }
 
     public String getDate() {
@@ -350,5 +373,8 @@ public class DownloadItem extends JPanel {
         remove(removeFromQueue);
         remove(downloadSpeedArea);
         remove(downloadItemProgressbar);
+        downloadedSizeArea.setText(downloadedSize + "kb");
+        repaint();
+        revalidate();
     }
 }

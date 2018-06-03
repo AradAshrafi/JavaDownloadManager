@@ -17,9 +17,13 @@ public class Queues extends JFrame {
     public Queues(DownloadItemsConnection downloadItemsConnection) {
         queuesPanelLayout = new GridLayout(0, 1);
         setLayout(queuesPanelLayout);
-        this.downloadQueues = downloadItemsConnection.getDownloadQueues();
+        this.downloadQueues = downloadItemsConnection.getDownloadQueuesClone();
 
         for (String key : downloadQueues.keySet()) {
+            if (key.equals("main"))
+                continue;
+
+
             DownloadQueue value = downloadQueues.get(key);
             /**
              * building queue's title
@@ -43,7 +47,7 @@ public class Queues extends JFrame {
              */
             JPanel queuesItem = new JPanel(new GridLayout(0, 1));
             for (DownloadItem downloadItem : value.getQueue()) {
-                queuesItem.add(downloadItem);
+//                queuesItem.add(downloadItem);
             }
             currentQueue.add(queuesItem, BorderLayout.SOUTH);
             add(currentQueue);

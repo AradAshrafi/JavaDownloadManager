@@ -84,6 +84,9 @@ public class ListQueueJDM {
                     "locationOfStorage : " + downloadItemData.getData().get("locationOfStorage"),
                     "size : " + downloadItemData.getData().get("size"),
                     "downloadedSize : " + downloadItemData.getData().get("downloadedSize"),
+                    "downloadedSizePart1 : " + downloadItemData.getData().get("downloadedSizePart1"),
+                    "downloadedSizePart2 : " + downloadItemData.getData().get("downloadedSizePart2"),
+                    "downloadedSizePart3 : " + downloadItemData.getData().get("downloadedSizePart3"),
                     "date : " + downloadItemData.getData().get("date")
             };
             for (int i = 0; i < toWrite.length; i++) {

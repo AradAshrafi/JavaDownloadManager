@@ -28,6 +28,8 @@ public interface DownloadItemsConnection {
     //-->
     HashMap<String, DownloadQueue> getDownloadQueues();
 
+    HashMap<String, DownloadQueue> getDownloadQueuesClone();
+
     void addNewQueue(String Key, DownloadItem downloadItem);
 
     void addToCurrentQueue(String Key, DownloadItem downloadItem);
@@ -46,6 +48,6 @@ public interface DownloadItemsConnection {
 
     Container getUiContainer();
 
-    void reloadBody();
+    void reloadUI();
 
 }
