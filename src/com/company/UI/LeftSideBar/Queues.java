@@ -48,6 +48,9 @@ public class Queues extends JFrame {
             JPanel queuesItem = new JPanel(new GridLayout(0, 1));
             for (DownloadItem downloadItem : value.getQueue()) {
 //                queuesItem.add(downloadItem);
+                DownloadItem newDownloadItem = new DownloadItem(downloadItem.getDownloadItemData(), downloadItem.getDownloadSpeed(), downloadItemsConnection);
+                queuesItem.add(newDownloadItem);
+
             }
             currentQueue.add(queuesItem, BorderLayout.SOUTH);
             add(currentQueue);

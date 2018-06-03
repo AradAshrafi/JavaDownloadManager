@@ -24,7 +24,6 @@ public class DownloadItem extends JPanel {
     private String status;
     private int downloadedSize;
     private ArrayList<Integer> downloadedSizeParts;
-
     private int size;
     private int downloadSpeed;
     private SpringLayout downloadItemLayout;
@@ -51,6 +50,11 @@ public class DownloadItem extends JPanel {
     private JLabel downloadItemTitleLabel;
     private JProgressBar downloadItemProgressbar;
     private JTextArea sizeArea, downloadedSizeArea, downloadSpeedArea;
+
+    /**
+     * download Thread
+     */
+    private DownloadFromANewURL downloadFromANewURL;
 
 
     public DownloadItem(DownloadItemData downloadItemData, int downloadSpeed, DownloadItemsConnection downloadItemsConnection) {
@@ -83,7 +87,6 @@ public class DownloadItem extends JPanel {
         this.downloadedSizeParts.add(Integer.parseInt(downloadItemData.getData().get("downloadedSizePart1")));
         this.downloadedSizeParts.add(Integer.parseInt(downloadItemData.getData().get("downloadedSizePart2")));
         this.downloadedSizeParts.add(Integer.parseInt(downloadItemData.getData().get("downloadedSizePart3")));
-
         this.downloadSpeed = downloadSpeed;
 
 
@@ -231,10 +234,13 @@ public class DownloadItem extends JPanel {
         addToQueue.addActionListener(downloadItemButtonListener);
         removeFromQueue.addActionListener(downloadItemButtonListener);
 
-        if (status.equals("In Progress")) {
-            DownloadFromANewURL downloadFromANewURL = new DownloadFromANewURL(this);
-            downloadFromANewURL.execute();
 
+        /**
+         * handling thread
+         */
+        downloadFromANewURL = new DownloadFromANewURL(this);
+        if (status.equals("In Progress")) {
+            downloadFromANewURL.execute();
         }
 
         setVisible(true);
@@ -292,12 +298,17 @@ public class DownloadItem extends JPanel {
      */
     public void pauseSelectedItem() {
         setStatus("Paused");
+        System.out.println("toggle agha");
+        downloadFromANewURL.pause();
 //        downloadItemProgressbar.revalidate();
 //        downloadItemProgressbar.repaint();
     }
 
+
     public void resumeSelectedItem() {
+        System.out.println("toggle back");
         setStatus("In Progress");
+        downloadFromANewURL.resume();
 //        downloadItemProgressbar.revalidate();
 //        downloadItemProgressbar.repaint();
     }

@@ -5,28 +5,38 @@ import com.company.UI.Body.DownloadItem;
 import java.util.ArrayList;
 
 class DoUpdates extends Thread {
-    private static DownloadItem downloadItem;
-    private static ArrayList<Integer> downloadedSizeParts;
-    private static int totalSize;
+    private DownloadItem downloadItem;
+    private ArrayList<Integer> downloadedSizeParts;
+    private int totalSize;
+    boolean pauseOrResume = true;
 
     DoUpdates(DownloadItem downloadItem, ArrayList<Integer> downloadedSizeParts, int totalSize) {
-        DoUpdates.downloadItem = downloadItem;
-        DoUpdates.downloadedSizeParts = downloadedSizeParts;
-        DoUpdates.totalSize = totalSize;
+        this.downloadItem = downloadItem;
+        this.downloadedSizeParts = downloadedSizeParts;
+        this.totalSize = totalSize;
     }
 
-    static void doUpdates() {
+    void doUpdates() {
         int downloadedSize = 0;
+        System.out.println("total : " + totalSize);
         while (downloadedSize < totalSize) {
+            System.out.println(pauseOrResume);
+            while (!pauseOrResume) {
+                try {
+                    Thread.currentThread().sleep(200);
+                } catch (InterruptedException e) {
+                    System.out.println("can't sleep");
+                }
+            }
             try {
-                Thread.currentThread().sleep(100);
+                Thread.currentThread().sleep(200);
             } catch (InterruptedException e) {
                 System.out.println("can't sleep");
             }
             for (Integer downloadedSizePart : downloadedSizeParts) {
                 downloadedSize += downloadedSizePart;
             }
-            System.out.println(downloadedSize);
+            System.out.println("dl : " + downloadedSize);
             downloadItem.setDownloadedSize(downloadedSize);
             downloadItem.getDownloadItemData().setDownloadedSize(Integer.toString(downloadedSize));
             downloadItem.setDownloadedSizeParts(downloadedSizeParts);
@@ -35,6 +45,14 @@ class DoUpdates extends Thread {
             downloadItem.revalidate();
             downloadItem.repaint();
         }
+    }
+
+    void pauseUpdate() {
+        pauseOrResume = false;
+    }
+
+    void resumeUpdate() {
+        pauseOrResume = true;
     }
 
     public void run() {

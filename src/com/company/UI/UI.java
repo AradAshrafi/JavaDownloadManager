@@ -103,6 +103,8 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
 
     @Override
     public void pauseSelectedItem(DownloadItem selectedItem) {
+        System.out.println("pause");
+        selectedItem.pauseSelectedItem();
         downloadQueues.get("main").operationOnDownloadQueue(selectedItem, "pause");
         //it seems like JProgressbar doesn't need to revalidate  ------>
 //        body.revalidate();
@@ -113,6 +115,8 @@ public class UI extends JFrame implements DownloadItemsConnection, NewDownloadIt
 
     @Override
     public void resumeSelectedItem(DownloadItem selectedItem) {
+        System.out.println("resume");
+        selectedItem.resumeSelectedItem();
         downloadQueues.get("main").operationOnDownloadQueue(selectedItem, "resume");
         //it seems like JProgressbar doesn't need to revalidate  ----->
 //        body.revalidate();

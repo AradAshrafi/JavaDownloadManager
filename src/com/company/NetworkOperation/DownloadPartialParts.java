@@ -16,6 +16,7 @@ class DownloadPartialParts extends Thread {
     private int downloadPart;
     private int byteStart;
     private int byteFinal;
+    private boolean pauseOrResume = true;
 
     DownloadPartialParts(DownloadItem downloadItem, String fileName, String url, String locationOfStorage, ArrayList<Integer> downloadedSizeParts, int index, int byteStart, int byteFinal) {
         this.downloadItem = downloadItem;
@@ -44,9 +45,21 @@ class DownloadPartialParts extends Thread {
                 int bytesRead;
                 byte[] buffer = new byte[1024];
                 //use thread here to not update UI every single moment:D
-                Thread doUpdates = new DoUpdates(downloadItem, downloadedSizeParts, downloadItem.getSizeOfDownload());
+                DoUpdates doUpdates = new DoUpdates(downloadItem, downloadedSizeParts, downloadItem.getSizeOfDownload());
                 doUpdates.start();
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    if (!pauseOrResume)
+                        doUpdates.pauseUpdate();
+                    else
+                        doUpdates.resumeUpdate();
+
+                    while (!pauseOrResume) {
+                        try {
+                            sleep(25);
+                        } catch (InterruptedException e) {
+                            System.out.println("cant sleep to pause");
+                        }
+                    }
                     outputStream.write(buffer, 0, bytesRead);
                     downloadedSizeParts.set(downloadPart, (downloadedSizeParts.get(downloadPart) + bytesRead));
 
@@ -62,6 +75,14 @@ class DownloadPartialParts extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    void pause() {
+        this.pauseOrResume = false;
+    }
+
+    void resumee() {
+        this.pauseOrResume = true;
     }
 
     @Override

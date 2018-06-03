@@ -15,8 +15,10 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
     private String url;
     private String fileName;
     private String locationOfStorage;
+    private boolean pauseOrResume;
     private int downloadedSize;
     private ArrayList<Integer> downloadedSizeParts;
+    private ArrayList<DownloadPartialParts> segments;
 
     public DownloadFromANewURL(DownloadItem downloadItem) {
         this.downloadItem = downloadItem;
@@ -25,6 +27,7 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
         this.url = downloadItem.getUrl();
         this.locationOfStorage = downloadItem.getLocationOfStorage();
         this.downloadedSizeParts = downloadItem.getDownloadedSizeParts();
+        this.segments = new ArrayList<>();
     }
 
     public void sendGETRequest() {
@@ -38,19 +41,18 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
             downloadItem.setsize(downloadItemSize);
             /// /i have 3 parts for each download so i divide it to 3
             int eachPartSize = downloadItemSize / 3;
-            ArrayList<Thread> threads = new ArrayList<>();
             for (int i = 1; i <= 3; i++) {
-                Thread thread;
+                DownloadPartialParts thread;
                 if (i == 3) {
                     thread = new DownloadPartialParts(downloadItem, fileName, url, locationOfStorage, downloadedSizeParts, (i - 1), (i - 1) * eachPartSize, downloadItemSize);
                 } else {
                     //-1 is to pretend double writing of last bit in each part
                     thread = new DownloadPartialParts(downloadItem, fileName, url, locationOfStorage, downloadedSizeParts, (i - 1), (i - 1) * eachPartSize, i * eachPartSize - 1);
                 }
-                threads.add(thread);
+                segments.add(thread);
                 thread.start();
             }
-            for (Thread thread : threads) {
+            for (Thread thread : segments) {
                 thread.join();
             }
             concatSegments(eachPartSize, downloadItemSize);
@@ -99,7 +101,7 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
         return 0;
     }
 
-//    @Override
+    //    @Override
 //    protected void process(List<Integer> chunks) {
 ////        for (Integer chunk : chunks) {
 ////            System.out.println("processing:D");
@@ -109,6 +111,18 @@ public class DownloadFromANewURL extends SwingWorker<Integer, Integer> {
 //////            downloadItem.repaint();
 ////        }
 //    }
+    public void pause() {
+        for (DownloadPartialParts segment : segments) {
+            segment.pause();
+        }
+    }
+
+    public void resume() {
+        for (DownloadPartialParts segment : segments) {
+            segment.resumee();
+        }
+    }
+
 
     @Override
     protected void done() {

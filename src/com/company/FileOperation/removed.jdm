@@ -418,3 +418,316 @@ downloadedSizePart2 : 0
 downloadedSizePart3 : 0
 date : 2018/06/03 19:04:41
  
+id : 66
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 20:34:06
+ 
+id : 67
+title : Sample-text-file-1000kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-1000kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 20:34:32
+ 
+id : 69
+title : Sample-text-file-1000kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-1000kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 20:38:22
+ 
+id : 71
+title : Sample-text-file-500kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-500kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 511274
+downloadedSize : 540608
+downloadedSizePart1 : 81920
+downloadedSizePart2 : 72000
+downloadedSizePart3 : 56000
+date : 2018/06/03 21:07:09
+ 
+id : 70
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+downloadedSize : 102180
+downloadedSizePart1 : 34060
+downloadedSizePart2 : 34060
+downloadedSizePart3 : 34060
+date : 2018/06/03 20:41:32
+ 
+id : 65
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : Paused
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 19:05:03
+id : 65
+ 
+id : 73
+title : Sample-text-file-500kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-500kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 511274
+downloadedSize : 511274
+downloadedSizePart1 : 170424
+downloadedSizePart2 : 170424
+downloadedSizePart3 : 170426
+date : 2018/06/03 21:21:06
+ 
+id : 74
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:25:44
+ 
+id : 75
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+downloadedSize : 164120
+downloadedSizePart1 : 34060
+downloadedSizePart2 : 8000
+downloadedSizePart3 : 24000
+date : 2018/06/03 21:25:54
+ 
+id : 76
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+downloadedSize : 174564
+downloadedSizePart1 : 34060
+downloadedSizePart2 : 34060
+downloadedSizePart3 : 34060
+date : 2018/06/03 21:27:25
+ 
+id : 78
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:33:19
+ 
+id : 65
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : Paused
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 19:05:03
+ 
+id : 77
+title : Sample-text-file-100kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-100kb.txt
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 102180
+downloadedSize : 102180
+downloadedSizePart1 : 34060
+downloadedSizePart2 : 34060
+downloadedSizePart3 : 34060
+date : 2018/06/03 21:32:27
+ 
+id : 79
+title : Sample-text-file-1000kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-1000kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:33:41
+ 
+id : 80
+title : Sample-text-file-1000kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-1000kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:34:03
+ 
+id : 81
+title : Sample-text-file-1000kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-1000kb.txt
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:34:15
+ 
+id : 82
+title : %D9%BE%D8%B1%D9%88%DA%98%D9%87-1.pdf?forcedownload=1
+url : https://ceit.aut.ac.ir/courses/pluginfile.php/16256/mod_assign/introattachment/0/%D9%BE%D8%B1%D9%88%DA%98%D9%87-1.pdf?forcedownload=1
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:35:12
+ 
+id : 83
+title : %D9%BE%D8%B1%D9%88%DA%98%D9%87-1.pdf
+url : https://ceit.aut.ac.ir/courses/pluginfile.php/16256/mod_assign/introattachment/0/%D9%BE%D8%B1%D9%88%DA%98%D9%87-1.pdf
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:35:41
+ 
+id : 86
+title : 20MB.zip
+url : http://ipv4.download.thinkbroadband.com/20MB.zip
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 391
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:37:55
+ 
+id : 64
+title : Sample-text-file-1000kb.txt
+url : https://www.sample-videos.com/text/Sample-text-file-1000kb.txt
+status : Paused
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 1023385
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 19:05:00
+ 
+id : 85
+title : asdfasdfasdf.pdf
+url : https://ceit.aut.ac.ir/courses/pluginfile.php/16256/mod_assign/introattachment/0/%D9%BE%D8%B1%D9%88%DA%98%D9%87-1.pdf
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : -1
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:36:22
+ 
+id : 84
+title : hasdfasdf.pdf
+url : https://ceit.aut.ac.ir/courses/pluginfile.php/16256/mod_assign/introattachment/0/%D9%BE%D8%B1%D9%88%DA%98%D9%87-1.pdf
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : -1
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:36:02
+ 
+id : 87
+title : 20MB.zip
+url : http://ipv4.download.thinkbroadband.com/20MB.zip
+status : done
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 391
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:38:27
+ 
+id : 90
+title : Sample-Spreadsheet-50000-rows.csv
+url : https://www.sample-videos.com/csv/Sample-Spreadsheet-50000-rows.csv
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:40:24
+ 
+id : 89
+title : Sample-Spreadsheet-50000-rows.csv
+url : https://www.sample-videos.com/csv/Sample-Spreadsheet-50000-rows.csv
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:40:07
+ 
+id : 88
+title : Sample-Spreadsheet-50000-rows.csv
+url : https://www.sample-videos.com/csv/Sample-Spreadsheet-50000-rows.csv
+status : In Progress
+locationOfStorage : C:\Users\asus\Desktop\WORKS
+size : 0
+downloadedSize : 0
+downloadedSizePart1 : 0
+downloadedSizePart2 : 0
+downloadedSizePart3 : 0
+date : 2018/06/03 21:39:52
+ 
