@@ -43,10 +43,13 @@ class DownloadPartialParts extends Thread {
                 OutputStream outputStream = new FileOutputStream(new File(locationOfStorage + '\\' + fileName + '.' + byteFinal));
                 int bytesRead;
                 byte[] buffer = new byte[1024];
+                //use thread here to not update UI every single moment:D
+                Thread doUpdates = new DoUpdates(downloadItem, downloadedSizeParts, downloadItem.getSizeOfDownload());
+                doUpdates.start();
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                     downloadedSizeParts.set(downloadPart, (downloadedSizeParts.get(downloadPart) + bytesRead));
-                    doDaUpdates();
+
                 }
                 inputStream.close();
                 outputStream.flush();
@@ -64,21 +67,7 @@ class DownloadPartialParts extends Thread {
     @Override
     public void run() {
         downloadPartialParts();
-    }
 
-    void doDaUpdates() {
-        int downloadedSize = 0;
-        for (Integer downloadSizePart : downloadedSizeParts) {
-            downloadedSize += downloadSizePart;
-        }
-        System.out.println(downloadedSize);
-        downloadItem.setDownloadedSize(downloadedSize);
-        downloadItem.getDownloadItemData().setDownloadedSize(Integer.toString(downloadedSize));
-        downloadItem.setDownloadedSizeParts(downloadedSizeParts);
-        downloadItem.getDownloadItemData().setDownloadedSizeParts(downloadedSizeParts);
-        downloadItem.updateProgressbar();
-        downloadItem.revalidate();
-        downloadItem.repaint();
     }
 }
 
