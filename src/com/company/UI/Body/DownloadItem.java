@@ -56,6 +56,9 @@ public class DownloadItem extends JPanel {
      */
     private DownloadFromANewURL downloadFromANewURL;
 
+    public DownloadItem() {
+
+    }
 
     public DownloadItem(DownloadItemData downloadItemData, int downloadSpeed, DownloadItemsConnection downloadItemsConnection) {
         UIManager.put("ProgressBar.background", Color.WHITE);
@@ -341,6 +344,11 @@ public class DownloadItem extends JPanel {
     public void setsize(int size) {
         this.size = size;
         sizeArea.setText(size + "kb");
+    }
+
+    public void setDownloadSpeed(int speed) {
+        this.downloadSpeed = speed;
+        downloadSpeedArea.setText(speed + "kb/s");
     }
 
     public void setDownloadedSize(int downloadedSize) {

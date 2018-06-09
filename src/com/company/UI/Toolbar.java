@@ -1,10 +1,14 @@
 package com.company.UI;
 
+import com.company.DownloadItemData.DownloadItemData;
+import com.company.FileOperation.ListQueueJDM;
+import com.company.FileOperation.SearchOnList;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.BetweenClassesRelation.NewDownloadItemConnection;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.LeftSideBar.LookAndFeelManager;
 import com.company.UI.LeftSideBar.NewDownloadTab;
+import com.company.UI.LeftSideBar.ProcessingOrCompleteOrSearchFrame;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -27,6 +32,8 @@ public class Toolbar extends JPanel {
     private JLabel verticalSeparator1;
     private JLabel verticalSeparator2;
     private JLabel logo;
+    private JTextField search;
+    private JButton submitSearch;
 
     public Toolbar(DownloadItemsConnection downloadItemsConnection, NewDownloadItemConnection newDownloadItemConnection) {
         Image originalImg;
@@ -116,7 +123,7 @@ public class Toolbar extends JPanel {
         settingsButton = new JButton(settingsIcon);
         settingsButton.setBorder(null);
         Border borderOfSettingsButton = settingsButton.getBorder();
-        Border marginOfSettingsButton = new EmptyBorder(0, 730, 0, 0);
+        Border marginOfSettingsButton = new EmptyBorder(0, 0, 0, 430);
         settingsButton.setBorder(new CompoundBorder(borderOfSettingsButton, marginOfSettingsButton));
         settingsButton.setContentAreaFilled(false);
 
@@ -156,6 +163,12 @@ public class Toolbar extends JPanel {
         Border marginOfLogo = new EmptyBorder(0, 0, 0, 45);
         logo.setBorder(new CompoundBorder(borderOfLogo, marginOfLogo));
 
+        /**
+         * handling search
+         */
+        search = new JTextField();
+        search.setPreferredSize(new Dimension(220, 30));
+        submitSearch = new JButton("search");
 
         /**
          * adding tooltip
@@ -179,6 +192,8 @@ public class Toolbar extends JPanel {
         add(verticalSeparator2);
         add(removeButton);
         add(settingsButton);
+        add(search);
+        add(submitSearch);
 
         /**
          * add handler to components
@@ -190,6 +205,7 @@ public class Toolbar extends JPanel {
         cancelButton.addActionListener(toolBarHandler);
         removeButton.addActionListener(toolBarHandler);
         settingsButton.addActionListener(toolBarHandler);
+        submitSearch.addActionListener(toolBarHandler);
 
 
         setVisible(true);
@@ -258,6 +274,21 @@ public class Toolbar extends JPanel {
             }
             if (event.getSource() == settingsButton) {
                 Setting setting = new Setting(downloadItemsConnection);
+            }
+
+            if (event.getSource() == submitSearch) {
+                System.out.println("submit");
+                String wordToFind = search.getText();
+                ArrayList<DownloadItemData> foundItemsData = SearchOnList.searchOnList(wordToFind);
+                if (foundItemsData.size() > 0) {
+//                    ArrayList<DownloadItem> downloadItems, String state, DownloadItemsConnection downloadItemsConnection
+                    ArrayList<DownloadItem> foundItems = new ArrayList<>();
+                    for (DownloadItemData downloadItemData : foundItemsData) {
+                        DownloadItem newDownloadItem = new DownloadItem(downloadItemData, 0, downloadItemsConnection);
+                        foundItems.add(newDownloadItem);
+                    }
+                    new ProcessingOrCompleteOrSearchFrame(foundItems, "search", downloadItemsConnection);
+                }
             }
         }
     }

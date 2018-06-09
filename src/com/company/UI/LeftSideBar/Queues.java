@@ -1,11 +1,15 @@
 package com.company.UI.LeftSideBar;
 
+import com.company.DownloadItemData.DownloadItemData;
+import com.company.FileOperation.ListQueueJDM;
 import com.company.UI.BetweenClassesRelation.DownloadItemsConnection;
 import com.company.UI.Body.DownloadItem;
 import com.company.UI.Body.DownloadQueue;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,8 +37,10 @@ public class Queues extends JFrame {
             queueName.setText(key);
             currentQueue.setLayout(new BorderLayout());
             JPanel currentRowOperation = new JPanel(new GridLayout(0, 2));
-            currentRowOperation.add(new JButton("Play"));
-            currentRowOperation.add(new JButton("Pause"));
+            JButton playButton = new JButton("Play");
+            JButton pauseButton = new JButton("Pause");
+            currentRowOperation.add(playButton);
+            currentRowOperation.add(pauseButton);
 
             /**
              * queue's title added
@@ -48,14 +54,53 @@ public class Queues extends JFrame {
             JPanel queuesItem = new JPanel(new GridLayout(0, 1));
             for (DownloadItem downloadItem : value.getQueue()) {
 //                queuesItem.add(downloadItem);
-                DownloadItem newDownloadItem = new DownloadItem(downloadItem.getDownloadItemData(), downloadItem.getDownloadSpeed(), downloadItemsConnection);
+                DownloadItemData newQueueItemData = downloadItem.getDownloadItemData();
+                newQueueItemData.getData().put("status", "Paused");
+                DownloadItem newDownloadItem = new DownloadItem(newQueueItemData, downloadItem.getDownloadSpeed(), downloadItemsConnection);
                 queuesItem.add(newDownloadItem);
-
+                ListQueueJDM.addToQueue(newDownloadItem.getDownloadItemData(), key);
             }
             currentQueue.add(queuesItem, BorderLayout.SOUTH);
+            QueueHandler handler = new QueueHandler(key, playButton, pauseButton, value, downloadItemsConnection);
+
+            playButton.addActionListener(handler);
+            pauseButton.addActionListener(handler);
+
             add(currentQueue);
+
+
         }
         pack();
         setVisible(true);
+    }
+
+    private class QueueHandler implements ActionListener {
+        private JButton playButton;
+        private JButton pauseButton;
+        private String queueName;
+        private DownloadQueue currentQueue;
+        private DownloadItemsConnection downloadItemsConnection;
+
+        QueueHandler(String queueName, JButton playButton, JButton pauseButton, DownloadQueue currentQueue, DownloadItemsConnection downloadItemsConnection) {
+            this.playButton = playButton;
+            this.pauseButton = pauseButton;
+            this.currentQueue = currentQueue;
+            this.downloadItemsConnection = downloadItemsConnection;
+            this.queueName = queueName;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == playButton) {
+                for (DownloadItem queueItem : currentQueue.getQueue()) {
+                    downloadItemsConnection.resumeSelectedItemInQueue(queueName, queueItem);
+                }
+            }
+            if (e.getSource() == pauseButton) {
+                for (DownloadItem queueItem : currentQueue.getQueue()) {
+                    downloadItemsConnection.pauseSelectedItemInQueue(queueName, queueItem);
+                }
+            }
+        }
     }
 }

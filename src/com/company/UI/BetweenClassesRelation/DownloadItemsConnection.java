@@ -21,8 +21,12 @@ public interface DownloadItemsConnection {
 
     void resumeSelectedItem(DownloadItem selectedItem);
 
-    void cancelSelectedItem(DownloadItem selectedItem);
+    void pauseSelectedItemInQueue(String queueName, DownloadItem selectedItem);
 
+    void resumeSelectedItemInQueue(String queueName, DownloadItem selectedItem);
+
+    void cancelSelectedItem(DownloadItem selectedItem);
+    
     //<--
 
     //-->

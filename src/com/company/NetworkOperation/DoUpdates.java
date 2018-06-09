@@ -18,9 +18,8 @@ class DoUpdates extends Thread {
 
     void doUpdates() {
         int downloadedSize = 0;
-        System.out.println("total : " + totalSize);
+        int currentPeriodDownloadedSize = 0;
         while (downloadedSize < totalSize) {
-            System.out.println(pauseOrResume);
             while (!pauseOrResume) {
                 try {
                     Thread.currentThread().sleep(200);
@@ -36,7 +35,7 @@ class DoUpdates extends Thread {
             for (Integer downloadedSizePart : downloadedSizeParts) {
                 downloadedSize += downloadedSizePart;
             }
-            System.out.println("dl : " + downloadedSize);
+            downloadItem.setDownloadSpeed((downloadedSize - currentPeriodDownloadedSize) / 200);
             downloadItem.setDownloadedSize(downloadedSize);
             downloadItem.getDownloadItemData().setDownloadedSize(Integer.toString(downloadedSize));
             downloadItem.setDownloadedSizeParts(downloadedSizeParts);

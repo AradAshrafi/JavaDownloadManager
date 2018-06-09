@@ -7,9 +7,23 @@ public class DownloadItemData {
     private String Id;
     private HashMap<String, String> data;
 
+    /**
+     * essential data for each download,which will be saved in file
+     *
+     * @param id
+     * @param title
+     * @param url
+     * @param status
+     * @param locationOfStorage
+     * @param size
+     * @param downloadedSizeParts
+     * @param downloadedSize
+     * @param date
+     */
     public DownloadItemData(String id, String title, String url, String status, String locationOfStorage, int size, String[] downloadedSizeParts, int downloadedSize, String date) {
         data = new HashMap<>();
         Id = id;
+        data.put("queueName", "");
         data.put("title", title);
         data.put("url", url);
         data.put("status", status);
@@ -23,33 +37,6 @@ public class DownloadItemData {
         System.out.println(downloadedSizeParts[0] + "  " + downloadedSizeParts[1]);
 
     }
-
-//    /**
-//     * for new downloading items which no parts of them is being downloaded
-//     *
-//     * @param id
-//     * @param title
-//     * @param url
-//     * @param status
-//     * @param locationOfStorage
-//     * @param size
-//     * @param percentage
-//     * @param date
-//     */
-//    public DownloadItemData(String id, String title, String url, String status, String locationOfStorage, int size, int percentage, String date) {
-//        data = new HashMap<>();
-//        Id = id;
-//        data.put("title", title);
-//        data.put("url", url);
-//        data.put("status", status);
-//        data.put("locationOfStorage", locationOfStorage);
-//        data.put("size", Integer.toString(size));
-//        data.put("downloadedSize", Integer.toString(percentage));
-//        data.put("downloadSizePart1", "0");
-//        data.put("downloadSizePart2", "0");
-//        data.put("downloadSizePart3", "0");
-//        data.put("date", date);
-//    }
 
     public DownloadItemData(String id) {
         data = new HashMap<>();

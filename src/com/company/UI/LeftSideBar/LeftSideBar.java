@@ -201,7 +201,7 @@ public class LeftSideBar extends JPanel {
         public void actionPerformed(ActionEvent event) {
             if (event.getSource() == processing) {
                 System.out.println("processing");
-                new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "processing");
+                new ProcessingOrCompleteOrSearchFrame(downloadItemsConnection.getDownloadItems(), "processing", downloadItemsConnection);
 //                System.out.println(downloadItemsConnection.getDownloadsPanel().getMainQueue().getQueue().size());
 //                downloadItemsConnection.getDownloadsPanel().revalidate();
 //                downloadItemsConnection.getDownloadsPanel().repaint();
@@ -209,7 +209,7 @@ public class LeftSideBar extends JPanel {
             }
             if (event.getSource() == completed) {
                 System.out.println("completed");
-                new ProcessingOrCompleteFrame(downloadItemsConnection.getDownloadItems(), "completed");
+                new ProcessingOrCompleteOrSearchFrame(downloadItemsConnection.getDownloadItems(), "completed", downloadItemsConnection);
                 System.out.println(downloadItemsConnection.getDownloadsPanel().getMainQueue().getQueue().size());
 
 //                downloadItemsConnection.reloadBody();

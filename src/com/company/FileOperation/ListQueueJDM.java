@@ -27,7 +27,6 @@ public class ListQueueJDM {
         ArrayList<DownloadItemData> savedDownloadItems = new ArrayList<>();
         String lastCaughtItem = "";
         File file = new File(path);
-        System.out.println("im here");
         try {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
@@ -47,7 +46,8 @@ public class ListQueueJDM {
                         currentLineData += currentLineStringArray[i + 2] + " ";
                     }
                     currentLineData = currentLineData.trim();
-                    savedDownloadItems.get(savedDownloadItems.size() - 1).getData().put(currentLineStringArray[0], currentLineData);
+                    if (savedDownloadItems.size() > 0)
+                        savedDownloadItems.get(savedDownloadItems.size() - 1).getData().put(currentLineStringArray[0], currentLineData);
                 }
             }
             br.close();
@@ -62,9 +62,9 @@ public class ListQueueJDM {
     /**
      * @param downloadItemData -- an object containing all data about one download
      */
-    public static void newDownload(DownloadItemData downloadItemData, String listOrQueue, boolean newDownloadOrSaveDownloadsBeforeCLose) {
+    public static void newDownload(DownloadItemData downloadItemData, String listOrQueuename, boolean newDownloadOrSaveDownloadsBeforeCLose) {
         String path;
-        if (listOrQueue.equals("list")) {
+        if (listOrQueuename.equals("list")) {
             if (newDownloadOrSaveDownloadsBeforeCLose)
                 path = listPath;
             else
@@ -89,6 +89,43 @@ public class ListQueueJDM {
                     "downloadedSizePart3 : " + downloadItemData.getData().get("downloadedSizePart3"),
                     "date : " + downloadItemData.getData().get("date")
             };
+
+            for (int i = 0; i < toWrite.length; i++) {
+                bw.flush();
+                bw.write(toWrite[i]);
+                bw.newLine();
+            }
+            bw.newLine();
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("can't find file,try again");
+        }
+    }
+
+    /**
+     *
+     */
+    public static void addToQueue(DownloadItemData downloadItemData, String queueName) {
+        String path = queuePath;
+        File file = new File(path);
+        try {
+            FileWriter fr = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(fr);
+            String[] toWrite = {
+                    "queueName : " + queueName,
+                    "id : " + downloadItemData.getId(),
+                    "title : " + downloadItemData.getData().get("title"),
+                    "url : " + downloadItemData.getData().get("url"),
+                    "status : " + downloadItemData.getData().get("status"),
+                    "locationOfStorage : " + downloadItemData.getData().get("locationOfStorage"),
+                    "size : " + downloadItemData.getData().get("size"),
+                    "downloadedSize : " + downloadItemData.getData().get("downloadedSize"),
+                    "downloadedSizePart1 : " + downloadItemData.getData().get("downloadedSizePart1"),
+                    "downloadedSizePart2 : " + downloadItemData.getData().get("downloadedSizePart2"),
+                    "downloadedSizePart3 : " + downloadItemData.getData().get("downloadedSizePart3"),
+                    "date : " + downloadItemData.getData().get("date")
+            };
+
             for (int i = 0; i < toWrite.length; i++) {
                 bw.flush();
                 bw.write(toWrite[i]);
